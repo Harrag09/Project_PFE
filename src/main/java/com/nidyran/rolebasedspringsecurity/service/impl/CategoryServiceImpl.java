@@ -5,6 +5,7 @@ import com.nidyran.rolebasedspringsecurity.dao.repository.CategoryRepository;
 import com.nidyran.rolebasedspringsecurity.service.CategoryService;
 import com.nidyran.rolebasedspringsecurity.service.model.AddCategoryDto;
 import com.nidyran.rolebasedspringsecurity.service.model.CategoryDto;
+import com.nidyran.rolebasedspringsecurity.utils.BackendUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -29,7 +30,7 @@ public class CategoryServiceImpl implements CategoryService {
         categoryDto.setId(category.getId());
         categoryDto.setName(category.getName());
         categoryDto.setImage(category.getImage());
-        log.warn("Category added by {}", SecurityContextHolder.getContext().getAuthentication().getName());
+        log.warn("Category added by {}", BackendUtils.getCurrentUsername());
         return categoryDto;
     }
 

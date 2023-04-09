@@ -29,8 +29,8 @@ public class WebSecurityConfigurerAdapterImpl extends WebSecurityConfigurerAdapt
         return new BCryptPasswordEncoder(12);
     }
 
-    @Override
     @Bean
+    @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
@@ -68,5 +68,4 @@ public class WebSecurityConfigurerAdapterImpl extends WebSecurityConfigurerAdapt
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
-
 }
