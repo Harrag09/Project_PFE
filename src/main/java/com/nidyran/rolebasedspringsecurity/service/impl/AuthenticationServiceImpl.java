@@ -11,7 +11,6 @@ import com.nidyran.rolebasedspringsecurity.service.model.RegisterResponseDto;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -38,7 +37,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public LoginResponseDto login(LoginRequestDto loginRequestDto) {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequestDto.getUsername(),loginRequestDto.getPassword()));
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequestDto.getUsername(), loginRequestDto.getPassword()));
         return LoginResponseDto.builder()
                 .token(generateToken(loginRequestDto.getUsername()))
                 .build();
@@ -46,7 +45,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public RegisterResponseDto register(RegisterRequestDto registerRequestDto) {
-        return register(registerRequestDto.getUsername(),registerRequestDto.getPassword(),AuthorityEnum.CUSTOMER_AUTHORITY);
+        return register(registerRequestDto.getUsername(), registerRequestDto.getPassword(), AuthorityEnum.CUSTOMER_AUTHORITY);
     }
 
     @Override

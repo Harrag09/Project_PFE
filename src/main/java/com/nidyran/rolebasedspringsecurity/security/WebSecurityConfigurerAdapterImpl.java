@@ -16,36 +16,13 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import java.util.Arrays;
+import java.util.Collections;
 
 @Configuration
-@EnableGlobalMethodSecurity(prePostEnabled=true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 @RequiredArgsConstructor
 public class WebSecurityConfigurerAdapterImpl extends WebSecurityConfigurerAdapter {
     private final OncePerRequestFilterImpl oncePerRequestFilterImpl;
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().cors()
-        .and()
-        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        .and()
-        .authorizeRequests()
-                .antMatchers("/authentication-management/**").permitAll()
-        .and()
-        .authorizeRequests()
-                .antMatchers("/h2-console/**","/v3/api-docs","/swagger-ui/**","/swagger-ui.html").permitAll()
-        .and()
-        .authorizeRequests().anyRequest().authenticated();
-
-        http.addFilterBefore(oncePerRequestFilterImpl, UsernamePasswordAuthenticationFilter.class);
-    }
-
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/swagger-ui/**");
-        web.ignoring().antMatchers("/h2-console/**");
-    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -58,12 +35,35 @@ public class WebSecurityConfigurerAdapterImpl extends WebSecurityConfigurerAdapt
         return super.authenticationManagerBean();
     }
 
+    @Override
+    public void configure(WebSecurity web) {
+        web.ignoring().antMatchers("/swagger-ui/**");
+        web.ignoring().antMatchers("/h2-console/**");
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable().cors()
+                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeRequests()
+                .antMatchers("/authentication-management/**").permitAll()
+                .and()
+                .authorizeRequests()
+                .antMatchers("/h2-console/**", "/v3/api-docs", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+                .and()
+                .authorizeRequests().anyRequest().authenticated();
+
+        http.addFilterBefore(oncePerRequestFilterImpl, UsernamePasswordAuthenticationFilter.class);
+    }
+
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("*"));
-        configuration.setAllowedMethods(Arrays.asList("*"));
-        configuration.setAllowedHeaders(Arrays.asList("*"));
+        configuration.setAllowedOrigins(Collections.singletonList("*"));
+        configuration.setAllowedMethods(Collections.singletonList("*"));
+        configuration.setAllowedHeaders(Collections.singletonList("*"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
