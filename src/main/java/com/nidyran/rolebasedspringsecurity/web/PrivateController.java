@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/private-ressources")
-@Tag(name = "Private Resource")
 @RequiredArgsConstructor
+@Tag(name = "Private Resource")
+@RequestMapping("/private-resources")
 public class PrivateController {
 
     @GetMapping("/customer")
@@ -24,6 +24,12 @@ public class PrivateController {
     @GetMapping("/admin")
     @PreAuthorize("hasAuthority('ADMIN_AUTHORITY')")
     public ResponseEntity<String> privateResourceAdmin() {
+        return ResponseEntity.ok(BackendUtils.getCurrentUsername());
+    }
+
+    @GetMapping("/restaurant")
+    @PreAuthorize("hasAuthority('RESTAURANT_AUTHORITY')")
+    public ResponseEntity<String> privateResourceRestaurant() {
         return ResponseEntity.ok(BackendUtils.getCurrentUsername());
     }
 }

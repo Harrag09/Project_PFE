@@ -48,7 +48,7 @@ public class WebSecurityConfigurerAdapterImpl extends WebSecurityConfigurerAdapt
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/authentication-management/**").permitAll()
+                .antMatchers("/authentication-management/**", "/public-resources/**").permitAll()
                 .and()
                 .authorizeRequests()
                 .antMatchers("/h2-console/**", "/v3/api-docs", "/swagger-ui/**", "/swagger-ui.html").permitAll()

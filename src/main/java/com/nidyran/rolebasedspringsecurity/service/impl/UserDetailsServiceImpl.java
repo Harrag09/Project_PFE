@@ -1,6 +1,7 @@
 package com.nidyran.rolebasedspringsecurity.service.impl;
 
 import com.nidyran.rolebasedspringsecurity.dao.repository.UserRepository;
+import com.nidyran.rolebasedspringsecurity.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,6 +14,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-        return new MyUserDetails(userRepository.findByUsername(username));
+        return new CustomUserDetails(userRepository.findByUsername(username));
     }
 }

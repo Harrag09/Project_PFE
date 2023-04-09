@@ -1,4 +1,4 @@
-package com.nidyran.rolebasedspringsecurity.service.impl;
+package com.nidyran.rolebasedspringsecurity.security;
 
 import com.nidyran.rolebasedspringsecurity.dao.entity.User;
 import org.springframework.security.core.GrantedAuthority;
@@ -7,9 +7,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Collections;
 
-public class MyUserDetails implements UserDetails {
+public class CustomUserDetails implements UserDetails {
     private final transient User user;
-    public MyUserDetails(User user) {
+    public CustomUserDetails(User user) {
         this.user = user;
     }
 
