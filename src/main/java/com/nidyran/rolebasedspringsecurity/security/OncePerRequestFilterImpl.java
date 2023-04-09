@@ -43,6 +43,9 @@ public class OncePerRequestFilterImpl extends OncePerRequestFilter {
         token = token.substring(tokenPrefix.length());
         String username = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody().getSubject();
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+        if(!userDetails.isEnabled()){
+            return;
+        }
         Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails.getUsername(),userDetails.getPassword(),userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }

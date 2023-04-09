@@ -9,5 +9,5 @@ import com.nidyran.rolebasedspringsecurity.service.model.RegisterResponseDto;
 public interface AuthenticationService {
     LoginResponseDto login(LoginRequestDto loginRequestDto);
     RegisterResponseDto register(RegisterRequestDto registerRequestDto);
-    RegisterResponseDto register(String username, String password, AuthorityEnum authorityEnum);
+    RegisterResponseDto register(String username, String password, AuthorityEnum authorityEnum, boolean active);
 }

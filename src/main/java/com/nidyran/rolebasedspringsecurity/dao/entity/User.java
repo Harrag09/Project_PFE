@@ -7,12 +7,12 @@ import javax.persistence.*;
 @Entity
 @Setter
 @Getter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class User {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(unique = true)
@@ -20,6 +20,9 @@ public class User {
 
     @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false)
+    private boolean enabled;
 
     @Enumerated(EnumType.STRING)
     private AuthorityEnum authority;
