@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @Tag(name = "Plats Resource")
 @RequestMapping("/Plats-configuration")
-@PreAuthorize("hasAuthority('RESTAURANT_AUTHORITY')")
+@PreAuthorize("@securityService.hasAnyRole('RESTAURANT_AUTHORITY')")
 public class PlatsController {
     private final PlatsService platsService;
 

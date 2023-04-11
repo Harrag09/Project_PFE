@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.nidyran</groupId>
-	<artifactId>role-based-spring-security</artifactId>
+	<artifactId>end-of-studies-restaurant-backend-project</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>role-based-spring-security</name>
 	<description>Demo project for Spring Boot</description>

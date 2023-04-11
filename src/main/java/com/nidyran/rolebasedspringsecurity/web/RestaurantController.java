@@ -1,8 +1,8 @@
 package com.nidyran.rolebasedspringsecurity.web;
 
-import com.nidyran.rolebasedspringsecurity.service.CategoryService;
-import com.nidyran.rolebasedspringsecurity.service.model.AddCategoryDto;
-import com.nidyran.rolebasedspringsecurity.service.model.CategoryDto;
+import com.nidyran.rolebasedspringsecurity.service.RestaurantService;
+import com.nidyran.rolebasedspringsecurity.service.model.AddRestaurantDto;
+import com.nidyran.rolebasedspringsecurity.service.model.RestaurantDto;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @Tag(name = "Restaurant Resource")
 @RequestMapping("/restaurant-configuration")
-@PreAuthorize("hasAuthority('RESTAURANT_AUTHORITY')")
+@PreAuthorize("@securityService.hasAnyRole('RESTAURANT_AUTHORITY')")
 public class RestaurantController {
-    private final CategoryService categoryService;
+    private final RestaurantService restaurantService;
 
-    @PostMapping("/categories")
-    public ResponseEntity<CategoryDto> create(@RequestBody AddCategoryDto addCategoryDto) {
-        return ResponseEntity.ok(categoryService.create(addCategoryDto));
+    @PostMapping("/restaurant")
+    public ResponseEntity<RestaurantDto> create(@RequestBody AddRestaurantDto addRestaurantDto) {
+        return ResponseEntity.ok(restaurantService.create(addRestaurantDto));
     }
 }
