@@ -1,11 +1,11 @@
 package com.nidyran.rolebasedspringsecurity.web;
 
 import com.nidyran.rolebasedspringsecurity.service.CategoryService;
-import com.nidyran.rolebasedspringsecurity.service.PlatsService;
+import com.nidyran.rolebasedspringsecurity.service.MealService;
 import com.nidyran.rolebasedspringsecurity.service.model.AddCategoryDto;
-import com.nidyran.rolebasedspringsecurity.service.model.AddPlatsDto;
+import com.nidyran.rolebasedspringsecurity.service.model.AddMealDto;
 import com.nidyran.rolebasedspringsecurity.service.model.CategoryDto;
-import com.nidyran.rolebasedspringsecurity.service.model.PlatsDto;
+import com.nidyran.rolebasedspringsecurity.service.model.MealDto;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +19,7 @@ import java.util.List;
 @RequestMapping("/public-resources")
 public class PublicController {
     private final CategoryService categoryService;
-    private final PlatsService platsService;
+    private final MealService mealService;
 
     @GetMapping("/categories")
     public List<CategoryDto> findAll() {
@@ -32,12 +32,12 @@ public class PublicController {
     }
 
     @GetMapping("/plats")
-    public List<PlatsDto> findAllPlats() {
-        return platsService.findAll();
+    public List<MealDto> findAllPlats() {
+        return mealService.findAll();
     }
 
     @PostMapping("/plats")
-    public ResponseEntity<PlatsDto> create(@RequestBody AddPlatsDto addPlatsDto) {
-        return ResponseEntity.ok(platsService.create(addPlatsDto));
+    public ResponseEntity<MealDto> create(@RequestBody AddMealDto addMealDto) {
+        return ResponseEntity.ok(mealService.create(addMealDto));
     }
 }

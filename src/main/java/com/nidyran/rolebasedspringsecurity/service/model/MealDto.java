@@ -5,9 +5,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PlatsDto {
+public class MealDto {
     private long id;
     private String name;
     private double price;
     private String desc;
+    private CategoryDto category;
 }

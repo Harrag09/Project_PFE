@@ -8,7 +8,7 @@ import com.nidyran.rolebasedspringsecurity.service.model.CategoryDto;
 import com.nidyran.rolebasedspringsecurity.utils.BackendUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -19,29 +19,22 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
+    private final ModelMapper modelMapper;
 
     @Override
     public CategoryDto create(AddCategoryDto addCategoryDto) {
-        Category category = new Category();
-        category.setName(addCategoryDto.getName());
-        category.setImage(addCategoryDto.getImage());
-        category = categoryRepository.save(category);
-        CategoryDto categoryDto = new CategoryDto();
-        categoryDto.setId(category.getId());
-        categoryDto.setName(category.getName());
-        categoryDto.setImage(category.getImage());
         log.warn("Category added by {}", BackendUtils.getCurrentUsername());
-        return categoryDto;
+        return modelMapper.map(categoryRepository.save(modelMapper.map(addCategoryDto, Category.class)), CategoryDto.class);
     }
 
     @Override
     public List<CategoryDto> findAll() {
-        return categoryRepository.findAll().stream().map(category -> {
-            CategoryDto categoryDto = new CategoryDto();
-            categoryDto.setId(category.getId());
-            categoryDto.setName(category.getName());
-            categoryDto.setImage(category.getImage());
-            return categoryDto;
-        }).collect(Collectors.toList());
+        return categoryRepository.findAll().stream().map(category -> modelMapper.map(category, CategoryDto.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public void delete(long id) {
+        log.warn("Category deleted by {}", BackendUtils.getCurrentUsername());
+        categoryRepository.deleteById(id);
     }
 }

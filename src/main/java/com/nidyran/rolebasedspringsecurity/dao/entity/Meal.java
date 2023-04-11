@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Plats {
+public class Meal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -24,4 +24,7 @@ public class Plats {
     @Column(nullable = false)
     private String desc;
 
+    @ManyToOne(fetch=FetchType.EAGER, optional=false)
+    @JoinColumn(name="CATEGORY_ID")
+    private Category category;
 }
