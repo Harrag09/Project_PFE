@@ -4,6 +4,7 @@ import com.nidyran.rolebasedspringsecurity.utils.BackendUtils;
 import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -36,7 +37,7 @@ public class OncePerRequestFilterImpl extends OncePerRequestFilter {
     }
 
     public void authenticate(HttpServletRequest httpServletRequest){
-        String token = httpServletRequest.getHeader("Authorization");
+        String token = httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
         if(BackendUtils.isEmptyOrNull(token)||!token.startsWith(tokenPrefix)){
             return;
         }

@@ -26,6 +26,4 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private AuthorityEnum authority;
-
-
 }
