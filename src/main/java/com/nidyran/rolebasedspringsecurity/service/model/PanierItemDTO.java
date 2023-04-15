@@ -7,11 +7,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @RequiredArgsConstructor
-public class RestaurantDto {
+public class PanierItemDTO {
+    private Long id;
+    private MealDto meal;
+    private Integer qte;
 
-    private long id;
-    private String name;
-    private String address;
-    private String log;
 
 }

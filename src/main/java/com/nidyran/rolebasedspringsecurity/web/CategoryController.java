@@ -17,10 +17,14 @@ import org.springframework.web.bind.annotation.*;
 public class CategoryController {
     private final CategoryService categoryService;
 
-    @PostMapping("/categories")
+
+
+   @PostMapping("/categories")
     public ResponseEntity<CategoryDto> create(@RequestBody AddCategoryDto addCategoryDto) {
-        return ResponseEntity.ok(categoryService.create(addCategoryDto));
-    }
+       return ResponseEntity.ok(categoryService.create(addCategoryDto));
+
+   }
+
 
     @DeleteMapping("/categories/{id}")
     public ResponseEntity<Void> delete(@PathVariable long id) {

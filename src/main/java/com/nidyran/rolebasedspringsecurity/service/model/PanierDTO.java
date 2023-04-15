@@ -4,14 +4,15 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @RequiredArgsConstructor
-public class RestaurantDto {
+public class PanierDTO {
 
-    private long id;
-    private String name;
-    private String address;
-    private String log;
+    private Long id;
+    private UserDto user;
+    private List<PanierItemDTO> panierItems;
 
 }

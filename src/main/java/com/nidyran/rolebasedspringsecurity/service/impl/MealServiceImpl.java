@@ -19,8 +19,11 @@ import java.util.stream.Collectors;
 @Component
 @RequiredArgsConstructor
 public class MealServiceImpl implements MealService {
+
     private final MealRepository mealRepository;
     private final ModelMapper modelMapper;
+
+
 
     @Override
     public MealDto create(AddMealDto addMealDto) {
@@ -30,8 +33,19 @@ public class MealServiceImpl implements MealService {
         return modelMapper.map(mealRepository.save(meal), MealDto.class);
     }
 
+
     @Override
     public List<MealDto> findAll() {
         return mealRepository.findAll().stream().map(meal -> modelMapper.map(meal, MealDto.class)).collect(Collectors.toList());
     }
+
+    @Override
+    public List<MealDto> findByIds(List<Long> ids) {
+        List<Meal> meals = mealRepository.findAllById(ids);
+        return meals.stream()
+                .map(meal -> modelMapper.map(meal, MealDto.class))
+                .collect(Collectors.toList());
+    }
+
+
 }

@@ -2,7 +2,6 @@ package com.nidyran.rolebasedspringsecurity.web;
 
 import com.nidyran.rolebasedspringsecurity.service.CategoryService;
 import com.nidyran.rolebasedspringsecurity.service.MealService;
-import com.nidyran.rolebasedspringsecurity.service.model.AddCategoryDto;
 import com.nidyran.rolebasedspringsecurity.service.model.AddMealDto;
 import com.nidyran.rolebasedspringsecurity.service.model.CategoryDto;
 import com.nidyran.rolebasedspringsecurity.service.model.MealDto;
@@ -26,10 +25,7 @@ public class PublicController {
         return categoryService.findAll();
     }
 
-    @PostMapping("/categories")
-    public ResponseEntity<CategoryDto> create(@RequestBody AddCategoryDto addCategoryDto) {
-        return ResponseEntity.ok(categoryService.create(addCategoryDto));
-    }
+
 
     @GetMapping("/plats")
     public List<MealDto> findAllPlats() {

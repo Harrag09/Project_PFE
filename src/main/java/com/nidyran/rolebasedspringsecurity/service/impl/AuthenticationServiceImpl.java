@@ -9,8 +9,7 @@ import com.nidyran.rolebasedspringsecurity.service.model.LoginResponseDto;
 import com.nidyran.rolebasedspringsecurity.service.model.RegisterRequestDto;
 import com.nidyran.rolebasedspringsecurity.service.model.RegisterResponseDto;
 import com.nidyran.rolebasedspringsecurity.utils.BackendUtils;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,9 +18,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 @Slf4j
 @Service

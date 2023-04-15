@@ -4,33 +4,25 @@ import lombok.*;
 
 import javax.persistence.*;
 
-
-
 @Entity
 @Setter
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Meal {
+public class PanierItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
-    @Column(unique = true)
-    private String name;
-
-    @Column(nullable = false)
-    private double price;
-
-    @Column(nullable = false)
-    private String desc;
+    private Long id;
 
     @ManyToOne(fetch=FetchType.EAGER, optional=false)
-    @JoinColumn(name="CATEGORY_ID")
-    private Category category;
+    @JoinColumn(name="mealID")
+    private Meal meal;
 
+    private Integer quantity;
 
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "panierId", nullable = false)
+    private Panier panier;
 
 }

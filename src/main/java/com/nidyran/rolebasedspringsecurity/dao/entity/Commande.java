@@ -1,8 +1,14 @@
 package com.nidyran.rolebasedspringsecurity.dao.entity;
 
+
+import com.nidyran.rolebasedspringsecurity.enmus.CommandeStatus;
+import com.nidyran.rolebasedspringsecurity.enmus.PaymentMethod;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.List;
+
 
 @Entity
 @Setter
@@ -11,17 +17,22 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Commande {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
-    @Column(unique = true)
-    private int refcommande;
-
-    @Column(nullable = false)
-    private String etatcommande;
-
-    @ManyToOne( cascade = CascadeType.ALL )
-    @JoinColumn( name="idUser" )
+    private Long id;
+    private LocalDateTime dateCommande;
+    private CommandeStatus status;
+    private PaymentMethod paymentMethod;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "restaurant_id", nullable = false)
+    private Restaurant restaurant;
+
+
+    @OneToMany(mappedBy = "commande", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CommandeItem> commandeItems;
 }

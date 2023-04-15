@@ -1,12 +1,14 @@
 package com.nidyran.rolebasedspringsecurity.dao.repository;
 
-import com.nidyran.rolebasedspringsecurity.dao.entity.User;
+import com.nidyran.rolebasedspringsecurity.dao.entity.Panier;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+
+
 @Repository
-public interface UserRepository extends JpaRepository<User,Long> {
+public interface PanierRepository extends JpaRepository<Panier, Long> {
 
 
-    User findByUsername(String username);
 }

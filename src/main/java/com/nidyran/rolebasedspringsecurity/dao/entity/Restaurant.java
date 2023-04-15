@@ -1,12 +1,16 @@
 package com.nidyran.rolebasedspringsecurity.dao.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Setter
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Restaurant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,5 +25,15 @@ public class Restaurant {
     @Lob
     @Column(nullable = false)
     private String log;
+
+
+    @OneToMany(mappedBy="restaurant", orphanRemoval=true)
+    private List<Category> categories;
+
+/*
+    @OneToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="restaurantUserId")
+    private User user;
+*/
 
 }
