@@ -26,14 +26,13 @@ public class Restaurant {
     @Column(nullable = false)
     private String log;
 
-
     @OneToMany(mappedBy="restaurant", orphanRemoval=true)
     private List<Category> categories;
 
-/*
     @OneToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="restaurantUserId")
+    @JoinColumn(name="UserId")
     private User user;
-*/
+
+
 
 }

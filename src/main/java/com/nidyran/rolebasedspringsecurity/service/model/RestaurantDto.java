@@ -1,5 +1,6 @@
 package com.nidyran.rolebasedspringsecurity.service.model;
 
+import com.nidyran.rolebasedspringsecurity.dao.entity.User;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -13,5 +14,5 @@ public class RestaurantDto {
     private String name;
     private String address;
     private String log;
-
+    private User user;
 }

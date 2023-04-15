@@ -27,11 +27,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private AuthorityEnum authority;
 
- /*   @OneToOne(fetch=FetchType.LAZY, mappedBy="restaurantUserId")
-    Restaurant restaurant ;
 
-
-  */
 
 
 }
