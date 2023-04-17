@@ -1,4 +1,4 @@
-package com.nidyran.rolebasedspringsecurity.service.model;
+package com.nidyran.rolebasedspringsecurity.service.model.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

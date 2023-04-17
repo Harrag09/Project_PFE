@@ -1,5 +1,7 @@
-package com.nidyran.rolebasedspringsecurity.service.model;
+package com.nidyran.rolebasedspringsecurity.service.model.meal;
 
+import com.nidyran.rolebasedspringsecurity.dao.entity.Category;
+import com.nidyran.rolebasedspringsecurity.service.model.category.CategoryDto;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -12,5 +14,8 @@ public class MealDto {
     private String name;
     private double price;
     private String desc;
-    private CategoryDto category;
+    private long categoryId;
+
+
+
 }

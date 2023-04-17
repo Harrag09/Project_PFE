@@ -1,4 +1,4 @@
-package com.nidyran.rolebasedspringsecurity.service.impl;
+package com.nidyran.rolebasedspringsecurity.service;
 
 import com.nidyran.rolebasedspringsecurity.dao.repository.UserRepository;
 import com.nidyran.rolebasedspringsecurity.security.CustomUserDetails;
@@ -16,7 +16,4 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) {
         return new CustomUserDetails(userRepository.findByUsername(username));
     }
-
-
-
 }

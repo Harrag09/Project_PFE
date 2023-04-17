@@ -5,7 +5,5 @@ public enum CommandeStatus {
     PENDING,
     CONFIRMED,
     CANCELED,
-    COMPLETED
-
-
+    COMPLETED;
 }

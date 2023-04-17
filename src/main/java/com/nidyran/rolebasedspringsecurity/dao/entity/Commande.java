@@ -24,6 +24,7 @@ public class Commande {
     private LocalDateTime dateCommande;
     private CommandeStatus status;
     private PaymentMethod paymentMethod;
+    private double total;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
@@ -35,4 +36,10 @@ public class Commande {
 
     @OneToMany(mappedBy = "commande", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CommandeItem> commandeItems;
+
+
+    @OneToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="PanierId")
+    private Panier panier;
+
 }
