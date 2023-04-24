@@ -38,6 +38,7 @@ public class PanierService {
         panier.setUser(user);
         panier = panierRepository.save(panier);
         return modelMapper.map(panier, PanierDTO.class);
+
     }
 
 
@@ -48,7 +49,8 @@ public class PanierService {
         panierItem.setMeal(meal);
         panierItem.setQty(quantity);
         panierItem.setPanier(panier);
-
+        double mealTotal = meal.getPrice() * quantity;
+        panier.setTotal(panier.getTotal() + mealTotal);
         panier.getPanierItems().add(panierItem);
 
         panierRepository.save(panier);
@@ -68,7 +70,7 @@ public class PanierService {
 
     public void clearPanier(Long panierId) {
         Panier panier = panierRepository.findById(panierId).orElseThrow(() -> new PanierNotFoundException());
-
+        panier.setTotal(0);
         panier.getPanierItems().clear();
 
         panierRepository.save(panier);
@@ -80,6 +82,8 @@ public class PanierService {
         return modelMapper.map(panier, PanierDTO.class);
     }
 
+
+
     public List<PanierItemDTO> getPanierItems(Long panierId) {
         Panier panier = panierRepository.findById(panierId).orElseThrow(() -> new PanierNotFoundException());
 
@@ -87,6 +91,7 @@ public class PanierService {
                 .map(item -> modelMapper.map(item, PanierItemDTO.class))
                 .collect(Collectors.toList());
     }
+
 }
 
 

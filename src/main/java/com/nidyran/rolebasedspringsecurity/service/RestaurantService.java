@@ -12,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,7 +34,7 @@ public class RestaurantService {
     }
 
 
-    public RestaurantDto updateRestaurantInfo(long restaurantId, RestaurantDto updateRestaurantDto) {
+    public RestaurantDto updateRestaurantInfo( long restaurantId, RestaurantDto updateRestaurantDto) {
         Optional<Restaurant> restaurantOptional = restaurantRepository.findById(restaurantId);
         if (restaurantOptional.isPresent()) {
             Restaurant restaurant = restaurantOptional.get();

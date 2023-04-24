@@ -12,6 +12,8 @@ import java.util.List;
 @Setter
 @RequiredArgsConstructor
 public class AddRestaurantDto {
+
+
     private String name;
     private String address;
     private String log;

@@ -18,7 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Tag(name = "Meals Resource")
 @RequestMapping("/meal-configuration")
-@PreAuthorize("@securityService.hasAnyRole('RESTAURANT_AUTHORITY')")
+//@PreAuthorize("@securityService.hasAnyRole('RESTAURANT_AUTHORITY')")
 public class MealController {
     private final MealService mealService;
 

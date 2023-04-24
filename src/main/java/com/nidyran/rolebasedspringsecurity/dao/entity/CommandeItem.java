@@ -14,16 +14,11 @@ public class CommandeItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "mealId", nullable = false)
-    private Meal meal;
-
     private Integer quantity;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "commande_id", nullable = false)
-    private Commande commande;
-}
+    @ManyToOne
+    @JoinColumn(name = "meal_id")
+    private Meal meal;
+    @ManyToOne
+    @JoinColumn(name = "panier_item_id")
+    private PanierItem panierItem;}
 

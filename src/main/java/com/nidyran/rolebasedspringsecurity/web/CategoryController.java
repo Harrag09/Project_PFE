@@ -17,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Tag(name = "Category Resource")
 @RequestMapping("/category-configuration")
-@PreAuthorize("@securityService.hasAnyRole('RESTAURANT_AUTHORITY')")
+//@PreAuthorize("@securityService.hasAnyRole('RESTAURANT_AUTHORITY')")
 public class CategoryController {
     private final CategoryService categoryService;
 

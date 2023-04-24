@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @RequiredArgsConstructor
 public class MealDto {
-    private long id;
+    private Long id ;
     private String name;
     private double price;
     private String desc;

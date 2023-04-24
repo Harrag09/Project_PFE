@@ -1,7 +1,14 @@
 package com.nidyran.rolebasedspringsecurity.bootstrap;
 
+
 import com.nidyran.rolebasedspringsecurity.enmus.AuthorityEnum;
 import com.nidyran.rolebasedspringsecurity.service.AuthenticationService;
+import com.nidyran.rolebasedspringsecurity.service.CategoryService;
+import com.nidyran.rolebasedspringsecurity.service.MealService;
+import com.nidyran.rolebasedspringsecurity.service.RestaurantService;
+import com.nidyran.rolebasedspringsecurity.service.model.category.AddCategoryDto;
+import com.nidyran.rolebasedspringsecurity.service.model.meal.AddMealDto;
+import com.nidyran.rolebasedspringsecurity.service.model.restaurant.AddRestaurantDto;
 import com.nidyran.rolebasedspringsecurity.utils.BackendUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +24,8 @@ public class DummyData implements CommandLineRunner {
     public static final String CUSTOMER = "customer";
     public static final String RESTAURANT = "restaurant";
     private final AuthenticationService authenticationService;
+
+
 
     @Value("${default.user.login}")
     private String username;
@@ -43,10 +52,19 @@ public class DummyData implements CommandLineRunner {
         addUser("customer_disabled", CUSTOMER, AuthorityEnum.CUSTOMER_AUTHORITY, false);
         addUser(RESTAURANT, RESTAURANT, AuthorityEnum.RESTAURANT_AUTHORITY, true);
         addUser("restaurant_disabled", RESTAURANT, AuthorityEnum.RESTAURANT_AUTHORITY, false);
+
     }
+
 
     private void addUser(String username, String password, AuthorityEnum authorityEnum, boolean active) {
         authenticationService.register(username, password, authorityEnum, active);
         log.warn("{} token {}", username, BackendUtils.generateToken(username, secret, validity));
+
     }
+
+
+
+
+
+
 }

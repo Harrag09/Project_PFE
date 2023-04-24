@@ -16,16 +16,10 @@ import java.util.List;
 @RequiredArgsConstructor
 @Tag(name = "Panier Resource")
 @RequestMapping("/panier-resources")
-@PreAuthorize("hasAuthority('CUSTOMER_AUTHORITY')")
+
 public class PanierController {
 
     private final PanierService panierService;
-
-    @PostMapping("/")
-    public ResponseEntity<PanierDTO> createPanier(@RequestBody AddPanierDTO addPanierDTO) {
-        PanierDTO panierDTO = panierService.createPanier(addPanierDTO);
-        return ResponseEntity.ok(panierDTO);
-    }
 
     @PostMapping("AddItem/{panierId}/items")
     public ResponseEntity<?> addItemToPanier(@PathVariable Long panierId,

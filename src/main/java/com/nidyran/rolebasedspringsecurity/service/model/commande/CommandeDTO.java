@@ -3,13 +3,13 @@ package com.nidyran.rolebasedspringsecurity.service.model.commande;
 import com.nidyran.rolebasedspringsecurity.enmus.CommandeStatus;
 import com.nidyran.rolebasedspringsecurity.enmus.PaymentMethod;
 import com.nidyran.rolebasedspringsecurity.service.model.restaurant.RestaurantDto;
-import com.nidyran.rolebasedspringsecurity.service.model.user.UserDto;
+import com.nidyran.rolebasedspringsecurity.service.model.user.LoginRequestDto;
 import lombok.Getter;
 
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+
 import java.util.List;
 
 
@@ -17,15 +17,20 @@ import java.util.List;
 @Setter
 @RequiredArgsConstructor
 public class CommandeDTO {
+    private long id;
 
-    private Long id;
-    private Long panierId;
-    private LocalDateTime dateCommande;
     private CommandeStatus status;
+
     private PaymentMethod paymentMethod;
-    private UserDto user;
+
+    private List<CommandeItemDTO> items;
+
+    private LoginRequestDto user;
+
     private RestaurantDto restaurant;
-    private List<CommandeItemDTO> commandeItems;
+
+
+
 
 
 }

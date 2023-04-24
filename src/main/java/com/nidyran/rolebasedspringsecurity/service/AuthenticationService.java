@@ -1,8 +1,10 @@
 package com.nidyran.rolebasedspringsecurity.service;
 
+import com.nidyran.rolebasedspringsecurity.dao.entity.Panier;
 import com.nidyran.rolebasedspringsecurity.dao.entity.User;
 import com.nidyran.rolebasedspringsecurity.dao.repository.UserRepository;
 import com.nidyran.rolebasedspringsecurity.enmus.AuthorityEnum;
+import com.nidyran.rolebasedspringsecurity.service.model.panier.AddPanierDTO;
 import com.nidyran.rolebasedspringsecurity.service.model.user.LoginRequestDto;
 import com.nidyran.rolebasedspringsecurity.service.model.user.LoginResponseDto;
 import com.nidyran.rolebasedspringsecurity.service.model.user.RegisterRequestDto;
@@ -27,6 +29,8 @@ public class AuthenticationService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+    private final PanierService panierService;
+
     @Value("${jwt.validity}")
     private Long validity;
 
@@ -48,7 +52,13 @@ public class AuthenticationService {
         if(AuthorityEnum.RESTAURANT_AUTHORITY.equals(registerRequestDto.getAuthority())){
             return register(registerRequestDto.getUsername(), registerRequestDto.getPassword(), AuthorityEnum.RESTAURANT_AUTHORITY, false);
         }
-        return register(registerRequestDto.getUsername(), registerRequestDto.getPassword(), AuthorityEnum.CUSTOMER_AUTHORITY, true);
+        register(registerRequestDto.getUsername(), registerRequestDto.getPassword(), AuthorityEnum.CUSTOMER_AUTHORITY, true);
+
+        AddPanierDTO panier = new AddPanierDTO();
+        panier.setUserId(registerRequestDto.getId());
+        panierService.createPanier(panier);
+
+        return null;
     }
 
     public RegisterResponseDto register(String username, String password, AuthorityEnum authorityEnum, boolean active) {
@@ -60,5 +70,6 @@ public class AuthenticationService {
                 .build();
         user = userRepository.save(user);
         return RegisterResponseDto.builder().id(user.getId()).username(user.getUsername()).build();
+
     }
 }

@@ -11,7 +11,7 @@ import lombok.Setter;
 public class PanierItemDTO {
     private Long id;
     private long idPanier;
-    private MealDto meal;
+    private long mealId;
     private Integer qte;
 
 

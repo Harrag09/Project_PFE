@@ -21,25 +21,20 @@ public class Commande {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private LocalDateTime dateCommande;
+  //  private LocalDateTime dateCommande;
+    @Enumerated(EnumType.STRING)
     private CommandeStatus status;
+    @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
-    private double total;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "panier_id")
+    private Panier panier;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "restaurant_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
 
-
-    @OneToMany(mappedBy = "commande", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CommandeItem> commandeItems;
-
-
-    @OneToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="PanierId")
-    private Panier panier;
 
 }
