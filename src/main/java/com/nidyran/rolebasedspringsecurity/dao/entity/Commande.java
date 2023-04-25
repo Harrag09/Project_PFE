@@ -6,8 +6,6 @@ import com.nidyran.rolebasedspringsecurity.enmus.PaymentMethod;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.List;
 
 
 @Entity
@@ -21,20 +19,34 @@ public class Commande {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-  //  private LocalDateTime dateCommande;
     @Enumerated(EnumType.STRING)
     private CommandeStatus status;
+
+    private Integer quantity;
+    private String address;
+    private String tel ;
+    private String desc;
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
+
+    @ManyToOne
+    @JoinColumn(name = "meal_id")
+    private Meal meal;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "panier_id")
     private Panier panier;
+
+    @ManyToOne
+    @JoinColumn(name = "panier_item_id")
+    private PanierItem panierItem;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
     @ManyToOne
     @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
-
 
 }

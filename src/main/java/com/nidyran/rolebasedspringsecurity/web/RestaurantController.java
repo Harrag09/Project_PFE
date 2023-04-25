@@ -21,7 +21,7 @@ public class    RestaurantController {
     private final RestaurantService restaurantService;
 
     @PostMapping("/restaurant/create")
-    public ResponseEntity<RestaurantDto> createRestaurant(@RequestBody AddRestaurantDto addRestaurantDto) {
+    public ResponseEntity<AddRestaurantDto> createRestaurant(@RequestBody AddRestaurantDto addRestaurantDto) {
         return ResponseEntity.ok(restaurantService.createRestaurant(addRestaurantDto));
     }
 
@@ -36,9 +36,14 @@ public class    RestaurantController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/restaurant/restaurant/{id}")
+    @GetMapping("/restaurant/getRestaurantById/{id}")
     public ResponseEntity<RestaurantDto> getRestaurantById(@PathVariable("id") long restaurantId) {
         return ResponseEntity.ok(restaurantService.getRestaurantById(restaurantId));
+    }
+    @GetMapping("/restaurant/getRestaurantIdByUserId/{userId}")
+    public ResponseEntity<RestaurantDto> getRestaurantByUserId(@PathVariable Long userId) {
+        RestaurantDto restaurantDto = restaurantService.getRestaurantIdByUserId(userId);
+        return ResponseEntity.ok(restaurantDto);
     }
 
     @GetMapping("/restaurants/all")

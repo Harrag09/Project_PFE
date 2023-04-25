@@ -5,6 +5,7 @@ import com.nidyran.rolebasedspringsecurity.dao.entity.User;
 import com.nidyran.rolebasedspringsecurity.dao.repository.UserRepository;
 import com.nidyran.rolebasedspringsecurity.enmus.AuthorityEnum;
 import com.nidyran.rolebasedspringsecurity.service.model.panier.AddPanierDTO;
+import com.nidyran.rolebasedspringsecurity.service.model.restaurant.AddRestaurantDto;
 import com.nidyran.rolebasedspringsecurity.service.model.user.LoginRequestDto;
 import com.nidyran.rolebasedspringsecurity.service.model.user.LoginResponseDto;
 import com.nidyran.rolebasedspringsecurity.service.model.user.RegisterRequestDto;
@@ -30,6 +31,7 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
 
     private final PanierService panierService;
+    private final RestaurantService restaurantService;
 
     @Value("${jwt.validity}")
     private Long validity;
@@ -49,16 +51,27 @@ public class AuthenticationService {
             log.warn("Admin registration is not allowed");
             return null;
         }
-        if(AuthorityEnum.RESTAURANT_AUTHORITY.equals(registerRequestDto.getAuthority())){
-            return register(registerRequestDto.getUsername(), registerRequestDto.getPassword(), AuthorityEnum.RESTAURANT_AUTHORITY, false);
+        else if(AuthorityEnum.RESTAURANT_AUTHORITY.equals(registerRequestDto.getAuthority())){
+
+          register(registerRequestDto.getUsername(), registerRequestDto.getPassword(), AuthorityEnum.RESTAURANT_AUTHORITY, false);
+
+
+            return null;
         }
+        else{
         register(registerRequestDto.getUsername(), registerRequestDto.getPassword(), AuthorityEnum.CUSTOMER_AUTHORITY, true);
 
         AddPanierDTO panier = new AddPanierDTO();
         panier.setUserId(registerRequestDto.getId());
         panierService.createPanier(panier);
+            AddRestaurantDto restaurantDto = new AddRestaurantDto();
+            restaurantDto.setUserId(registerRequestDto.getId());
+            restaurantDto.setLog("azerty");
+            restaurantDto.setAddress("azerty");
+            restaurantDto.setName(registerRequestDto.getUsername()+" RESTO");
+            restaurantService.createRestaurant(restaurantDto);
 
-        return null;
+        return null;}
     }
 
     public RegisterResponseDto register(String username, String password, AuthorityEnum authorityEnum, boolean active) {

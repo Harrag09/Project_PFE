@@ -1,7 +1,9 @@
 package com.nidyran.rolebasedspringsecurity.service;
 
 import com.nidyran.rolebasedspringsecurity.Exeption.RestaurantNotFoundException;
+import com.nidyran.rolebasedspringsecurity.Exeption.UserNotFoundException;
 import com.nidyran.rolebasedspringsecurity.dao.entity.Restaurant;
+import com.nidyran.rolebasedspringsecurity.dao.entity.User;
 import com.nidyran.rolebasedspringsecurity.dao.repository.RestaurantRepository;
 import com.nidyran.rolebasedspringsecurity.dao.repository.UserRepository;
 import com.nidyran.rolebasedspringsecurity.service.model.restaurant.AddRestaurantDto;
@@ -27,10 +29,10 @@ public class RestaurantService {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
 
-    public RestaurantDto createRestaurant(AddRestaurantDto addRestaurantDto) {
+    public AddRestaurantDto createRestaurant(AddRestaurantDto addRestaurantDto) {
         log.warn("Restaurant added by {}", SecurityContextHolder.getContext().getAuthentication().getName());
         Restaurant restaurant = modelMapper.map(addRestaurantDto, Restaurant.class);
-        return modelMapper.map(restaurantRepository.save(restaurant), RestaurantDto.class);
+        return modelMapper.map(restaurantRepository.save(restaurant), AddRestaurantDto.class);
     }
 
 
@@ -74,5 +76,15 @@ public class RestaurantService {
     public List<RestaurantDto> getAllRestaurants() {
         List<Restaurant> restaurants = restaurantRepository.findAll();
         return restaurants.stream().map(restaurant -> modelMapper.map(restaurant, RestaurantDto.class)).collect(Collectors.toList());
+    }
+
+    public RestaurantDto getRestaurantIdByUserId(Long userId) {
+        Optional<Restaurant> restaurantOptional = restaurantRepository.findByUserId(userId);
+        if (restaurantOptional.isPresent()) {
+            Restaurant restaurant = restaurantOptional.get();
+            return getRestaurantById(restaurant.getId());
+        } else {
+            throw new RestaurantNotFoundException(userId);
+        }
     }
 }

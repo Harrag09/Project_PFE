@@ -16,4 +16,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) {
         return new CustomUserDetails(userRepository.findByUsername(username));
     }
+
+
 }
