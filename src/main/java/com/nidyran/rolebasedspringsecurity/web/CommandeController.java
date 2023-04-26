@@ -24,7 +24,7 @@ public class CommandeController {
     private final CommandeService commandeService;
 
     @PostMapping("/create/{panierId}")
-    public Commande createCommande(@PathVariable Long panierId, @RequestBody AddCommandeDTO addCommandeDTO) {
+    public AddCommandeDTO createCommande(@PathVariable Long panierId, @RequestBody AddCommandeDTO addCommandeDTO) {
         return commandeService.createCommande(panierId, addCommandeDTO);
     }
 

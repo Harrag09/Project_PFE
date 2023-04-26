@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 public class CommandeItem {
-
+    //embeddable collection jpa
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

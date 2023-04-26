@@ -60,28 +60,10 @@ public class AuthenticationService {
         }
         if(AuthorityEnum.RESTAURANT_AUTHORITY.equals(registerRequestDto.getAuthority()))
         {
-            CompletableFuture<Void> future1 = CompletableFuture.runAsync(() -> { register(registerRequestDto.getUsername(), registerRequestDto.getPassword(), AuthorityEnum.RESTAURANT_AUTHORITY, false);
-            }).thenRun(() -> {
-            AddRestaurantDto addRestaurantDto= new AddRestaurantDto();
-            addRestaurantDto.setUserId(registerRequestDto.getId());
-            addRestaurantDto.setName("Change My name");
-            addRestaurantDto.setAddress("change my address");
-            addRestaurantDto.setLog("photo here");
-            restaurantService.createRestaurant(addRestaurantDto);
-            });
-            return null;
+            register(registerRequestDto.getUsername(), registerRequestDto.getPassword(), AuthorityEnum.RESTAURANT_AUTHORITY, false);
+            return register(registerRequestDto.getUsername(), registerRequestDto.getPassword(), AuthorityEnum.RESTAURANT_AUTHORITY, false);
         }
-        CompletableFuture<PanierDTO> future2 = CompletableFuture.supplyAsync(() -> {
-            register(registerRequestDto.getUsername(), registerRequestDto.getPassword(), AuthorityEnum.CUSTOMER_AUTHORITY, true);
-            AddPanierDTO panier = new AddPanierDTO();
-            panier.setUserId(registerRequestDto.getId());
-            panier.setTotal(0);
-            PanierDTO createdPanierDTO = panierService.createPanier(panier);
-            return createdPanierDTO;
-        });
-
-        return null;
-
+        return register(registerRequestDto.getUsername(), registerRequestDto.getPassword(), AuthorityEnum.CUSTOMER_AUTHORITY, true);
     }
 
     public RegisterResponseDto register(String username, String password, AuthorityEnum authorityEnum, boolean active) {
