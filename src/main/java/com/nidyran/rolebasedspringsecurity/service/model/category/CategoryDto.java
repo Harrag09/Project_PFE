@@ -1,12 +1,11 @@
 package com.nidyran.rolebasedspringsecurity.service.model.category;
 
-import com.nidyran.rolebasedspringsecurity.service.model.meal.MealDto;
-import com.nidyran.rolebasedspringsecurity.service.model.restaurant.RestaurantDto;
+
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
+
 
 @Getter
 @Setter

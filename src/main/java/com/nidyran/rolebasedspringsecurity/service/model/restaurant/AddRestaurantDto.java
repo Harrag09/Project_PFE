@@ -1,7 +1,6 @@
 package com.nidyran.rolebasedspringsecurity.service.model.restaurant;
 
-import com.nidyran.rolebasedspringsecurity.dao.entity.User;
-import com.nidyran.rolebasedspringsecurity.service.model.category.AddCategoryDto;
+
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -9,7 +8,7 @@ import lombok.Setter;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.List;
+
 
 @Getter
 @Setter

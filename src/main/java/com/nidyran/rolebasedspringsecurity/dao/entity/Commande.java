@@ -6,47 +6,48 @@ import com.nidyran.rolebasedspringsecurity.enmus.PaymentMethod;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 
 @Entity
 @Setter
 @Getter
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor
 public class Commande {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Enumerated(EnumType.STRING)
-    private CommandeStatus status;
 
-    private Integer quantity;
+    @Column(name = "total")
+    private double total;
+
+    @Column(name = "user_id")
+    private Long userId;
+
+    @OneToMany(mappedBy = "commande", cascade = CascadeType.ALL)
+    private List<CommandeItem> commandeItems;
+
+    @Column(name = "address")
     private String address;
-    private String tel ;
-    private String desc;
-    @Enumerated(EnumType.STRING)
-    private PaymentMethod paymentMethod;
 
-    @ManyToOne
-    @JoinColumn(name = "meal_id")
-    private Meal meal;
+    @Column(name = "nom")
+    private String nom;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "panier_id")
-    private Panier panier;
+    @Column(name = "tel")
+    private String tel;
 
-    @ManyToOne
-    @JoinColumn(name = "panier_item_id")
-    private PanierItem panierItem;
+    @Column(name = "description")
+    private String description;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @Column(name = "commandeStatus")
+    private String commandeStatus;
 
-    @ManyToOne
-    @JoinColumn(name = "restaurant_id")
+    @Column(name = "paymentMethod")
+    private String paymentMethod;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "restaurantId")
     private Restaurant restaurant;
 
 }

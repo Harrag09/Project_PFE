@@ -1,15 +1,12 @@
 package com.nidyran.rolebasedspringsecurity.service.model.commande;
 
 
-import com.nidyran.rolebasedspringsecurity.enmus.CommandeStatus;
-import com.nidyran.rolebasedspringsecurity.enmus.PaymentMethod;
+
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import java.util.List;
 
 
 @Getter
@@ -17,18 +14,21 @@ import javax.persistence.Id;
 @RequiredArgsConstructor
 public class AddCommandeDTO {
 
-    private long id;
-    private Integer quantity;
+
+
+    private Long userId;
+
+    private Long PanierId;
+
     private String address;
-    private String tel ;
-    private String desc;
 
-    private PaymentMethod paymentMethod;
-    private CommandeStatus status;
-    private long mealId;
-    private long panierId;
-    private long panierItemId;
-    private long userId;
+    private String nom;
 
-    private long restaurantId;
+    private String tel;
+
+    private String description;
+
+    private String paymentMethod;
+
+    private Long restaurantId;
 }

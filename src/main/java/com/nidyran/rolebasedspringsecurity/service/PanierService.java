@@ -3,15 +3,15 @@ package com.nidyran.rolebasedspringsecurity.service;
 
 import com.nidyran.rolebasedspringsecurity.Exeption.MealNotFoundException;
 import com.nidyran.rolebasedspringsecurity.Exeption.PanierNotFoundException;
-import com.nidyran.rolebasedspringsecurity.dao.entity.Meal;
-import com.nidyran.rolebasedspringsecurity.dao.entity.Panier;
-import com.nidyran.rolebasedspringsecurity.dao.entity.PanierItem;
-import com.nidyran.rolebasedspringsecurity.dao.entity.User;
+import com.nidyran.rolebasedspringsecurity.dao.entity.*;
+
 import com.nidyran.rolebasedspringsecurity.dao.repository.MealRepository;
 import com.nidyran.rolebasedspringsecurity.dao.repository.PanierRepository;
+
 import com.nidyran.rolebasedspringsecurity.service.model.panier.AddPanierDTO;
 import com.nidyran.rolebasedspringsecurity.service.model.panier.PanierDTO;
 import com.nidyran.rolebasedspringsecurity.service.model.panier.PanierItemDTO;
+import com.nidyran.rolebasedspringsecurity.service.model.restaurant.AddRestaurantDto;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -29,18 +29,11 @@ public class PanierService {
     private final PanierRepository panierRepository;
     private final ModelMapper modelMapper;
 
-
-
     public PanierDTO createPanier(AddPanierDTO addPanierDTO) {
-        User user = new User();
-        user.setId(addPanierDTO.getUserId());
-        Panier panier = new Panier();
-        panier.setUser(user);
-        panier = panierRepository.save(panier);
-        return modelMapper.map(panier, PanierDTO.class);
-
+        Panier panier = modelMapper.map(addPanierDTO, Panier.class);
+        Panier savedPanier = panierRepository.save(panier);
+        return modelMapper.map(savedPanier, PanierDTO.class);
     }
-
 
     public void addItemToPanier(Long panierId, Long mealId, Integer quantity) {
         Panier panier = panierRepository.findById(panierId).orElseThrow(() -> new PanierNotFoundException());

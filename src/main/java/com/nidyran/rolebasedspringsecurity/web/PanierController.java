@@ -29,6 +29,12 @@ public class PanierController {
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping("/createPanier")
+    public ResponseEntity<PanierDTO> createPanier(@RequestBody AddPanierDTO addPanierDTO) {
+        PanierDTO panierDTO = panierService.createPanier(addPanierDTO);
+        return ResponseEntity.ok(panierDTO);
+    }
+
     @DeleteMapping("RemoveItem/{panierId}/items/{panierItemId}")
     public ResponseEntity<?> removeItemFromPanier(@PathVariable Long panierId,
                                                   @PathVariable Long panierItemId) {

@@ -12,4 +12,16 @@ import lombok.NoArgsConstructor;
 public class RegisterResponseDto {
     private long id;
     private String username;
+    private String message;
+    public RegisterResponseDto(String message) {
+        this.message = message;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 }

@@ -15,12 +15,11 @@ import java.util.List;
 public class Panier {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
     private double total;
     @OneToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name = "userId", nullable = false)
+    @JoinColumn(name = "userId")
     private User user;
     @OneToMany(mappedBy = "panier", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PanierItem> panierItems;
-    
 }
