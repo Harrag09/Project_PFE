@@ -29,6 +29,7 @@ public class CommandeService {
     private final ModelMapper modelMapper;
     private final RestaurantRepository restaurantRepository;
     private final UserDetailsServiceImpl userDetailsService;
+    private final PanierService panierService;
 
     public AddCommandeDTO createCommande(Long panierId, AddCommandeDTO addCommandeDTO) {
         User user = userDetailsService.getUserById(addCommandeDTO.getUserId());
@@ -57,8 +58,7 @@ public class CommandeService {
             commandeItems.add(commandeItem);
         }
         commandeRepository.save(commande);
-
-        panierRepository.delete(panier);
+        panierService.clearPanier(panierId);
        return modelMapper.map(commande,AddCommandeDTO.class);
     }
 
