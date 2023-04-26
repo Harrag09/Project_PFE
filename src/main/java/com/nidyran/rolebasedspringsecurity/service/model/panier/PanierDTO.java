@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 @RequiredArgsConstructor
 public class PanierDTO {
-    private Long id;
+    private long id;
     private long userId;
     private double total;
 

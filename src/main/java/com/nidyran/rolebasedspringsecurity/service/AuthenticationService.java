@@ -29,7 +29,6 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-
     private final PanierService panierService;
     private final RestaurantService restaurantService;
 
@@ -46,32 +45,30 @@ public class AuthenticationService {
                 .build();
     }
 
-    public RegisterResponseDto register(RegisterRequestDto registerRequestDto) {
-        if (registerRequestDto.getAuthority().equals(AuthorityEnum.ADMIN_AUTHORITY)) {
+    public RegisterResponseDto register(RegisterRequestDto registerRequestDto)
+    {
+        if (registerRequestDto.getAuthority().equals(AuthorityEnum.ADMIN_AUTHORITY))
+        {
             log.warn("Admin registration is not allowed");
             return null;
         }
-        else if(AuthorityEnum.RESTAURANT_AUTHORITY.equals(registerRequestDto.getAuthority())){
-
-          register(registerRequestDto.getUsername(), registerRequestDto.getPassword(), AuthorityEnum.RESTAURANT_AUTHORITY, false);
-
-
+        if(AuthorityEnum.RESTAURANT_AUTHORITY.equals(registerRequestDto.getAuthority()))
+        {
+            register(registerRequestDto.getUsername(), registerRequestDto.getPassword(), AuthorityEnum.RESTAURANT_AUTHORITY, false);
+            AddRestaurantDto addRestaurantDto= new AddRestaurantDto();
+            addRestaurantDto.setUserId(registerRequestDto.getId());
+            addRestaurantDto.setName("Change My name");
+            addRestaurantDto.setAddress("change my address");
+            addRestaurantDto.setLog("photo here");
+            restaurantService.createRestaurant(addRestaurantDto);
             return null;
         }
-        else{
-        register(registerRequestDto.getUsername(), registerRequestDto.getPassword(), AuthorityEnum.CUSTOMER_AUTHORITY, true);
 
+        register(registerRequestDto.getUsername(), registerRequestDto.getPassword(), AuthorityEnum.CUSTOMER_AUTHORITY, true);
         AddPanierDTO panier = new AddPanierDTO();
         panier.setUserId(registerRequestDto.getId());
         panierService.createPanier(panier);
-            AddRestaurantDto restaurantDto = new AddRestaurantDto();
-            restaurantDto.setUserId(registerRequestDto.getId());
-            restaurantDto.setLog("azerty");
-            restaurantDto.setAddress("azerty");
-            restaurantDto.setName(registerRequestDto.getUsername()+" RESTO");
-            restaurantService.createRestaurant(restaurantDto);
-
-        return null;}
+        return null;
     }
 
     public RegisterResponseDto register(String username, String password, AuthorityEnum authorityEnum, boolean active) {

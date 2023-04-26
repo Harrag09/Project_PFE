@@ -17,6 +17,7 @@ import javax.persistence.Id;
 @RequiredArgsConstructor
 public class AddCommandeDTO {
 
+    private long id;
     private Integer quantity;
     private String address;
     private String tel ;

@@ -30,23 +30,23 @@ public class Commande {
     private PaymentMethod paymentMethod;
 
     @ManyToOne
-    @JoinColumn(name = "meal_id")
+    @JoinColumn(name = "mealId")
     private Meal meal;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "panier_id")
+    @JoinColumn(name = "panierId")
     private Panier panier;
 
     @ManyToOne
-    @JoinColumn(name = "panier_item_id")
+    @JoinColumn(name = "panierItemId")
     private PanierItem panierItem;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "userId")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "restaurant_id")
+    @JoinColumn(name = "restaurantId")
     private Restaurant restaurant;
 
 }

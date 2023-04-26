@@ -20,10 +20,7 @@ public class    RestaurantController {
 
     private final RestaurantService restaurantService;
 
-    @PostMapping("/restaurant/create")
-    public ResponseEntity<AddRestaurantDto> createRestaurant(@RequestBody AddRestaurantDto addRestaurantDto) {
-        return ResponseEntity.ok(restaurantService.createRestaurant(addRestaurantDto));
-    }
+
 
     @PutMapping("/restaurant/update/{id}")
     public ResponseEntity<RestaurantDto> updateRestaurantInfo(@PathVariable("id") long restaurantId, @RequestBody RestaurantDto updateRestaurantDto) {
@@ -55,4 +52,5 @@ public class    RestaurantController {
     public ResponseEntity<List<RestaurantDto>> searchRestaurants(@RequestParam("keyword") String keyword) {
         return ResponseEntity.ok(restaurantService.searchRestaurants(keyword));
     }
+
 }

@@ -17,12 +17,9 @@ public class Panier {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private double total;
-
     @OneToOne(fetch=FetchType.EAGER)
     @JoinColumn(name = "userId", nullable = false)
     private User user;
-
-
     @OneToMany(mappedBy = "panier", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PanierItem> panierItems;
     
