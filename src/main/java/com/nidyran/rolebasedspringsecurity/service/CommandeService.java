@@ -61,7 +61,7 @@ public class CommandeService {
         panierService.clearPanier(panierId);
        return modelMapper.map(commande,AddCommandeDTO.class);
     }
-
+// commentaire pour misejour
 
     private CommandeItem convert (PanierItem panierItem)
     {  CommandeItem commandeItem = new CommandeItem();
