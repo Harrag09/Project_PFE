@@ -3,6 +3,7 @@ package com.nidyran.rolebasedspringsecurity.service;
 
 
 
+import com.nidyran.rolebasedspringsecurity.Exeption.CommandeNotFoundException;
 import com.nidyran.rolebasedspringsecurity.Exeption.PanierNotFoundException;
 import com.nidyran.rolebasedspringsecurity.Exeption.RestaurantNotFoundException;
 import com.nidyran.rolebasedspringsecurity.dao.entity.*;
@@ -10,6 +11,7 @@ import com.nidyran.rolebasedspringsecurity.dao.repository.*;
 import com.nidyran.rolebasedspringsecurity.enmus.CommandeStatus;
 import com.nidyran.rolebasedspringsecurity.service.model.commande.AddCommandeDTO;
 import com.nidyran.rolebasedspringsecurity.service.model.commande.CommandeDTO;
+import com.nidyran.rolebasedspringsecurity.service.model.commande.CommandeItemDTO;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -48,7 +51,7 @@ public class CommandeService {
         commande.setTel(addCommandeDTO.getTel());
         commande.setDescription(addCommandeDTO.getDescription());
         commande.setPaymentMethod(addCommandeDTO.getPaymentMethod());
-        commande.setCommandeStatus(String.valueOf(CommandeStatus.CANCELED));
+        commande.setCommandeStatus(String.valueOf(CommandeStatus.PENDING));
         commande=commandeRepository.save(commande);
 
         List<CommandeItem> commandeItems = new ArrayList<>();
@@ -61,7 +64,7 @@ public class CommandeService {
         panierService.clearPanier(panierId);
        return modelMapper.map(commande,AddCommandeDTO.class);
     }
-// commentaire pour misejour
+
 
     private CommandeItem convert (PanierItem panierItem)
     {  CommandeItem commandeItem = new CommandeItem();
@@ -70,8 +73,26 @@ public class CommandeService {
         return commandeItem;
     }
 
-    public List<Commande> getAllCommandes() {
-        return commandeRepository.findAll();
+    public CommandeDTO updateCommandeStatus(Long commandeId, CommandeStatus nextStatus) {
+        Commande commande = commandeRepository.findById(commandeId)
+                .orElseThrow(() -> new CommandeNotFoundException(commandeId));
+        commande.setCommandeStatus(nextStatus.name());
+        Commande updatedCommande = commandeRepository.save(commande);
+        return modelMapper.map(updatedCommande, CommandeDTO.class);
     }
+    public List<CommandeDTO> getAllCommandes() {
+        List<Commande> commandes = commandeRepository.findAll();
+        return commandes.stream()
+                .map(commande -> modelMapper.map(commande, CommandeDTO.class))
+                .collect(Collectors.toList());
+    }
+    public List<CommandeItemDTO> getCommandeItemsByCommandId(Long commandeId) {
+        List<CommandeItem> commandeItems = commandeItemRepository.findByCommandeId(commandeId);
 
+        List<CommandeItemDTO> commandeItemDTOs = commandeItems.stream()
+                .map(commandeItem -> modelMapper.map(commandeItem, CommandeItemDTO.class))
+                .collect(Collectors.toList());
+
+        return commandeItemDTOs;
+    }
 }

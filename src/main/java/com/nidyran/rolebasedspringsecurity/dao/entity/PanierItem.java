@@ -19,7 +19,7 @@ public class PanierItem {
     @JoinColumn(name="mealID")
     private Meal meal;
 
-    private Integer qty;
+    private int qty;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "panierId", nullable = false)

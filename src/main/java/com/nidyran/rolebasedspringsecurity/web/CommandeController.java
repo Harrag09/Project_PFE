@@ -1,9 +1,11 @@
 package com.nidyran.rolebasedspringsecurity.web;
 
 import com.nidyran.rolebasedspringsecurity.dao.entity.Commande;
+import com.nidyran.rolebasedspringsecurity.enmus.CommandeStatus;
 import com.nidyran.rolebasedspringsecurity.service.CommandeService;
 import com.nidyran.rolebasedspringsecurity.service.model.commande.AddCommandeDTO;
 import com.nidyran.rolebasedspringsecurity.service.model.commande.CommandeDTO;
+import com.nidyran.rolebasedspringsecurity.service.model.commande.CommandeItemDTO;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -23,14 +25,25 @@ import java.util.stream.Collectors;
 public class CommandeController {
     private final CommandeService commandeService;
 
-    @PostMapping("/create/{panierId}")
+    @PostMapping("/commandes/create/{panierId}")
     public AddCommandeDTO createCommande(@PathVariable Long panierId, @RequestBody AddCommandeDTO addCommandeDTO) {
         return commandeService.createCommande(panierId, addCommandeDTO);
     }
 
-    @GetMapping("/")
-    public List<Commande> getAllCommandes() {
+    @GetMapping("/getAllCommandes")
+    public List<CommandeDTO> getAllCommandes() {
         return commandeService.getAllCommandes();
     }
 
+    @PutMapping("/commandes/update/{commandeId}/status")
+    public ResponseEntity<CommandeDTO> updateCommandeStatus(@PathVariable Long commandeId,
+                                                            @RequestParam CommandeStatus nextStatus) {
+        CommandeDTO updatedCommande = commandeService.updateCommandeStatus(commandeId, nextStatus);
+        return ResponseEntity.ok(updatedCommande);
+    }
+
+    @GetMapping("/commandes/getCommandeItems/{commandeId}/items")
+    public List<CommandeItemDTO> getCommandeItemsByCommandId(@PathVariable Long commandeId) {
+        return commandeService.getCommandeItemsByCommandId(commandeId);
+    }
 }

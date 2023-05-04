@@ -45,9 +45,11 @@ public class AuthenticationService {
     private String secret;
 
     public LoginResponseDto login(LoginRequestDto loginRequestDto) {
+        User user1=userRepository.findByUsername(loginRequestDto.getUsername());
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequestDto.getUsername(), loginRequestDto.getPassword()));
         return LoginResponseDto.builder()
                 .token(BackendUtils.generateToken(loginRequestDto.getUsername(), secret, validity))
+                .id(user1.getId())
                 .build();
     }
 

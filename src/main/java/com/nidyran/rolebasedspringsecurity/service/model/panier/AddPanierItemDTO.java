@@ -19,7 +19,7 @@ public class AddPanierItemDTO {
     private Long id;
     private long panierId;
     private long mealId;
-    private Integer qte;
+    private int  qte;
 
 
 }

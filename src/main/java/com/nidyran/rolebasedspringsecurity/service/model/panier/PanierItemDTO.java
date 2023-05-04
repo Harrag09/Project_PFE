@@ -12,7 +12,7 @@ public class PanierItemDTO {
     private Long id;
     private long idPanier;
     private long mealId;
-    private Integer qte;
+    private int  qte;
 
 
 

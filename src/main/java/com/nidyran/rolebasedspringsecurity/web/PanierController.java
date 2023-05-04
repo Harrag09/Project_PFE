@@ -16,7 +16,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Tag(name = "Panier Resource")
 @RequestMapping("/panier-resources")
-
 public class PanierController {
 
     private final PanierService panierService;
@@ -24,7 +23,7 @@ public class PanierController {
     @PostMapping("AddItem/{panierId}/items")
     public ResponseEntity<?> addItemToPanier(@PathVariable Long panierId,
                                              @RequestParam Long mealId,
-                                             @RequestParam Integer quantity) {
+                                             @RequestParam int quantity) {
         panierService.addItemToPanier(panierId, mealId, quantity);
         return ResponseEntity.ok().build();
     }
@@ -59,4 +58,5 @@ public class PanierController {
         List<PanierItemDTO> panierItems = panierService.getPanierItems(panierId);
         return ResponseEntity.ok(panierItems);
     }
+
 }
