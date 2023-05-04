@@ -38,7 +38,7 @@ public class CommandeService {
         User user = userDetailsService.getUserById(addCommandeDTO.getUserId());
         Restaurant restaurant = restaurantRepository.findById(addCommandeDTO.getRestaurantId())
                 .orElseThrow(() -> new RestaurantNotFoundException(addCommandeDTO.getRestaurantId()));
-
+//aa
         Panier panier = panierRepository.findById(panierId)
                 .orElseThrow(() -> new PanierNotFoundException());
 
@@ -65,14 +65,14 @@ public class CommandeService {
        return modelMapper.map(commande,AddCommandeDTO.class);
     }
 
-
+//aa
     private CommandeItem convert (PanierItem panierItem)
     {  CommandeItem commandeItem = new CommandeItem();
         commandeItem.setQuantity(panierItem.getQty());
         commandeItem.setMeal(panierItem.getMeal());
         return commandeItem;
     }
-
+//aa
     public CommandeDTO updateCommandeStatus(Long commandeId, CommandeStatus nextStatus) {
         Commande commande = commandeRepository.findById(commandeId)
                 .orElseThrow(() -> new CommandeNotFoundException(commandeId));
