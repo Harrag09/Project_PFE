@@ -30,19 +30,19 @@ public class CommandeController {
         return commandeService.createCommande(panierId, addCommandeDTO);
     }
 
-    @GetMapping("/getAllCommandes")
+    @GetMapping("/getAllCommand")
     public List<CommandeDTO> getAllCommandes() {
         return commandeService.getAllCommandes();
     }
 
-    @PutMapping("/commandes/update/{commandeId}/status")
+    @PutMapping("/command/update/{commandeId}/status")
     public ResponseEntity<CommandeDTO> updateCommandeStatus(@PathVariable Long commandeId,
                                                             @RequestParam CommandeStatus nextStatus) {
         CommandeDTO updatedCommande = commandeService.updateCommandeStatus(commandeId, nextStatus);
         return ResponseEntity.ok(updatedCommande);
     }
 
-    @GetMapping("/commandes/getCommandeItems/{commandeId}/items")
+    @GetMapping("/command/getCommandeItems/{commandeId}/items")
     public List<CommandeItemDTO> getCommandeItemsByCommandId(@PathVariable Long commandeId) {
         return commandeService.getCommandeItemsByCommandId(commandeId);
     }
