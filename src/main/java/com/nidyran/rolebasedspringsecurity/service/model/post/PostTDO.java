@@ -1,20 +1,20 @@
-package com.nidyran.rolebasedspringsecurity.service.model.category;
+package com.nidyran.rolebasedspringsecurity.service.model.post;
 
-
+import com.nidyran.rolebasedspringsecurity.dao.entity.Restaurant;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
-
-
 @Getter
 @Setter
 @RequiredArgsConstructor
-public class CategoryDto {
+public class PostTDO {
+
     private long id;
     private long restaurantId;
-    private String name;
     private String image;
+    private String desc;
+    private int nbLike;
 
 
 }
