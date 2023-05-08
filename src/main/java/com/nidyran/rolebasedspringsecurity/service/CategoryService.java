@@ -64,6 +64,18 @@ public class CategoryService {
             throw new CategoryNotFoundException(categoryId);
         }
     }
+    public List<CategoryDto> getCategoryByIdRestaurant(long restaurantId) {
+        List<Category> categories = categoryRepository.findByRestaurantId(restaurantId);
+        if (!categories.isEmpty()) {
+            return categories.stream()
+                    .map(category -> modelMapper.map(category, CategoryDto.class))
+                    .collect(Collectors.toList());
+        } else {
+            throw new CategoryNotFoundException(restaurantId);
+        }
+    }
+
+
 
     public List<CategoryDto> getAllCategories() {
         List<Category> categories = categoryRepository.findAll();

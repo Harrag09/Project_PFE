@@ -53,6 +53,12 @@ public class CategoryController {
         return ResponseEntity.ok(categories);
     }
 
+    @GetMapping("/restaurant/{restaurantId}/categories")
+    public ResponseEntity<List<CategoryDto>> getCategoryByIdRestaurant(@PathVariable long restaurantId) {
+        List<CategoryDto> categoryDto = categoryService.getCategoryByIdRestaurant(restaurantId);
+        return ResponseEntity.ok(categoryDto);
+    }
+
 
 
 }
