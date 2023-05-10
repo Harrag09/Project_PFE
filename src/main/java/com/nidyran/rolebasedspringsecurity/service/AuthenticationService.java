@@ -1,17 +1,18 @@
 package com.nidyran.rolebasedspringsecurity.service;
 
+import com.nidyran.rolebasedspringsecurity.dao.entity.Category;
 import com.nidyran.rolebasedspringsecurity.dao.entity.Panier;
+import com.nidyran.rolebasedspringsecurity.dao.entity.Post;
 import com.nidyran.rolebasedspringsecurity.dao.entity.User;
 import com.nidyran.rolebasedspringsecurity.dao.repository.PanierRepository;
 import com.nidyran.rolebasedspringsecurity.dao.repository.UserRepository;
 import com.nidyran.rolebasedspringsecurity.enmus.AuthorityEnum;
+import com.nidyran.rolebasedspringsecurity.service.model.category.CategoryDto;
 import com.nidyran.rolebasedspringsecurity.service.model.panier.AddPanierDTO;
 import com.nidyran.rolebasedspringsecurity.service.model.panier.PanierDTO;
+import com.nidyran.rolebasedspringsecurity.service.model.post.PostTDO;
 import com.nidyran.rolebasedspringsecurity.service.model.restaurant.AddRestaurantDto;
-import com.nidyran.rolebasedspringsecurity.service.model.user.LoginRequestDto;
-import com.nidyran.rolebasedspringsecurity.service.model.user.LoginResponseDto;
-import com.nidyran.rolebasedspringsecurity.service.model.user.RegisterRequestDto;
-import com.nidyran.rolebasedspringsecurity.service.model.user.RegisterResponseDto;
+import com.nidyran.rolebasedspringsecurity.service.model.user.*;
 import com.nidyran.rolebasedspringsecurity.utils.BackendUtils;
 
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
 
 @Slf4j
@@ -31,7 +34,7 @@ import java.util.concurrent.CompletableFuture;
 @RequiredArgsConstructor
 public class AuthenticationService {
     private final PanierRepository panierRepository;
-
+    private final ModelMapper modelMapper;
     private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -79,5 +82,8 @@ public class AuthenticationService {
         return RegisterResponseDto.builder().id(user.getId()).username(user.getUsername()).build();
 
     }
-
+    public List<UserDto> getAllUsers() {
+        List<User> users = userRepository.findAll();
+        return users.stream().map(user -> modelMapper.map(user, UserDto.class)).collect(Collectors.toList());
+    }
 }

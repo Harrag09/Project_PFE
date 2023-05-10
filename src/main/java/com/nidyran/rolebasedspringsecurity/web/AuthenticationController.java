@@ -27,5 +27,9 @@ public class AuthenticationController {
         return ResponseEntity.ok(authenticationService.register(registerRequestDto));
     }
 
-
+    @GetMapping("/user/all")
+    public ResponseEntity<List<UserDto>> getAllCategories() {
+        List<UserDto> users = authenticationService.getAllUsers();
+        return ResponseEntity.ok(users);
+    }
 }

@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,6 +22,7 @@ public class RegisterRequestDto {
     private long id;
     private String username;
     private String password;
+    private String email;
     private AuthorityEnum authority;
 
 }
