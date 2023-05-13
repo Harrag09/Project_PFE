@@ -4,6 +4,7 @@ package com.nidyran.rolebasedspringsecurity.web;
 import com.nidyran.rolebasedspringsecurity.service.MealService;
 import com.nidyran.rolebasedspringsecurity.service.model.meal.AddMealDto;
 import com.nidyran.rolebasedspringsecurity.service.model.meal.MealDto;
+import com.nidyran.rolebasedspringsecurity.service.model.user.UserDto;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -55,6 +56,11 @@ public class MealController {
     @GetMapping("/byCategory/{categoryId}")
     public ResponseEntity<List<MealDto>> getMealsByCategory(@PathVariable long categoryId) {
         List<MealDto> meals = mealService.getMealsByCategory(categoryId);
+        return ResponseEntity.ok(meals);
+    }
+    @GetMapping("/meal/all")
+    public ResponseEntity<List<MealDto>> getAllMeal() {
+        List<MealDto> meals = mealService.getAllMeal();
         return ResponseEntity.ok(meals);
     }
 

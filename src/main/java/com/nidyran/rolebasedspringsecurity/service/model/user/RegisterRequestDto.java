@@ -22,7 +22,6 @@ public class RegisterRequestDto {
     private long id;
     private String username;
     private String password;
-    private String email;
     private AuthorityEnum authority;
 
 }

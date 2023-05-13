@@ -24,9 +24,7 @@ public class Delivery {
 
     private String email;
 
-
     private String address;
-
 
     private String image;
 

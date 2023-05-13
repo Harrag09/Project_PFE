@@ -30,10 +30,10 @@ public class RestaurantService {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
 
-    public AddRestaurantDto createRestaurant(AddRestaurantDto addRestaurantDto) {
+    public RestaurantDto createRestaurant(AddRestaurantDto addRestaurantDto) {
         log.warn("Restaurant added by {}", SecurityContextHolder.getContext().getAuthentication().getName());
         Restaurant restaurant = modelMapper.map(addRestaurantDto, Restaurant.class);
-        return modelMapper.map(restaurantRepository.save(restaurant), AddRestaurantDto.class);
+        return modelMapper.map(restaurantRepository.save(restaurant), RestaurantDto.class);
     }
 
 
