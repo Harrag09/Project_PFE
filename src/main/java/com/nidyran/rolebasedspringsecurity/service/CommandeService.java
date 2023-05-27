@@ -14,9 +14,13 @@ import com.nidyran.rolebasedspringsecurity.service.model.commande.CommandeDTO;
 import com.nidyran.rolebasedspringsecurity.service.model.commande.CommandeItemDTO;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,6 +29,7 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@EnableScheduling
 public class CommandeService {
     private final CommandeItemRepository commandeItemRepository;
     private final CommandeRepository commandeRepository;
@@ -52,6 +57,7 @@ public class CommandeService {
         commande.setDescription(addCommandeDTO.getDescription());
         commande.setPaymentMethod(addCommandeDTO.getPaymentMethod());
         commande.setCommandeStatus(String.valueOf(CommandeStatus.PENDING));
+        commande.setCreatedAt(LocalDateTime.now());
         commande=commandeRepository.save(commande);
 
         List<CommandeItem> commandeItems = new ArrayList<>();
@@ -80,12 +86,14 @@ public class CommandeService {
         Commande updatedCommande = commandeRepository.save(commande);
         return modelMapper.map(updatedCommande, CommandeDTO.class);
     }
-    public List<CommandeDTO> getAllCommandes() {
-        List<Commande> commandes = commandeRepository.findAll();
+    public List<CommandeDTO> getAllCommandesByRestaurantId(long restaurantId) {
+        List<Commande> commandes = commandeRepository.findByRestaurantId(restaurantId);
         return commandes.stream()
                 .map(commande -> modelMapper.map(commande, CommandeDTO.class))
                 .collect(Collectors.toList());
     }
+    
+
     public List<CommandeItemDTO> getCommandeItemsByCommandId(Long commandeId) {
         List<CommandeItem> commandeItems = commandeItemRepository.findByCommandeId(commandeId);
 
@@ -95,5 +103,13 @@ public class CommandeService {
 
         return commandeItemDTOs;
     }
-
+    public void deleteOldCommands() {
+        LocalDateTime thresholdTime = LocalDateTime.now().minusHours(24);
+        List<Commande> oldCommands = commandeRepository.findByCreatedAtBefore(thresholdTime);
+        commandeRepository.deleteAll(oldCommands);
+    }
+    @Scheduled(cron = "0 0 0 * * *")
+    public void deleteOldCommandsScheduled() {
+        deleteOldCommands();
+    }
 }

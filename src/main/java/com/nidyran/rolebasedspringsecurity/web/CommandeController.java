@@ -30,9 +30,10 @@ public class CommandeController {
         return commandeService.createCommande(panierId, addCommandeDTO);
     }
 
-    @GetMapping("/getAllCommand")
-    public List<CommandeDTO> getAllCommandes() {
-        return commandeService.getAllCommandes();
+    @GetMapping("/getAllCommandByRestaurantId")
+    public ResponseEntity<List<CommandeDTO>> getAllCommandesByRestaurantId(@PathVariable Long restaurantId) {
+        List<CommandeDTO> commandes = commandeService.getAllCommandesByRestaurantId(restaurantId);
+        return ResponseEntity.ok(commandes);
     }
 
     @PutMapping("/command/update/{commandeId}/status")

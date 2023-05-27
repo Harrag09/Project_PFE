@@ -28,7 +28,7 @@ public class CommandeDTO {
     private String description;
     private String commandeStatus;
     private String paymentMethod;
-    private Long restaurantId;
+    private long restaurantId;
 }
 
 

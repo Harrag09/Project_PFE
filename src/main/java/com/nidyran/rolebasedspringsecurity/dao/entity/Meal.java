@@ -27,6 +27,8 @@ public class Meal {
     private String desc;
 
 
+
+
     @ManyToOne(fetch=FetchType.EAGER, optional=false)
     @JoinColumn(name="CATEGORY_ID")
     private Category category;

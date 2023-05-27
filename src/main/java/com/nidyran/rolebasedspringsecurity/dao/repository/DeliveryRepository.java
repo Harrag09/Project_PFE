@@ -13,4 +13,5 @@ import java.util.Optional;
 public interface DeliveryRepository  extends JpaRepository<Delivery, Long> {
     Optional<Delivery> findById(Long id);
     List<Delivery> findByNameContainingOrAddressContaining(String name, String address);
+
 }

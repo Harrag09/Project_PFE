@@ -6,6 +6,7 @@ import com.nidyran.rolebasedspringsecurity.enmus.PaymentMethod;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -49,5 +50,9 @@ public class Commande {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurantId")
     private Restaurant restaurant;
+
+    private LocalDateTime createdAt;
+
+
 
 }

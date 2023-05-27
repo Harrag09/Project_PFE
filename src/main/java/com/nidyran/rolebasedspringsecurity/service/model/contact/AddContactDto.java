@@ -1,4 +1,4 @@
-package com.nidyran.rolebasedspringsecurity.service.model.post;
+package com.nidyran.rolebasedspringsecurity.service.model.contact;
 
 import com.nidyran.rolebasedspringsecurity.dao.entity.Restaurant;
 import com.nidyran.rolebasedspringsecurity.dao.entity.User;
@@ -11,12 +11,12 @@ import javax.persistence.*;
 @Getter
 @Setter
 @RequiredArgsConstructor
-public class AddPostTDO {
+public class AddContactDto {
 
-    private Long id ;
-    private String image;
-    private String desc;
+    private String name;
+    private String email;
+    private String  message;
+    private long userId;
     private long restaurantId;
-
 
 }

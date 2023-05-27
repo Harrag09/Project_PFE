@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -30,5 +31,8 @@ public class AddCommandeDTO {
 
     private String paymentMethod;
 
-    private Long restaurantId;
+    private long restaurantId;
+
+    private LocalDateTime createdAt;
+
 }

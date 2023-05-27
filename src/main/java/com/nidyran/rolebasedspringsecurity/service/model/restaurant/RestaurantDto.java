@@ -13,11 +13,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RestaurantDto {
     
-    private long id;
-        private String name;
-        private String address;
-        private String log;
-    private long userId;
+         private long id;
+         private String name;
+         private String address;
+         private String log;
+         private long userId;
 
 }
     
