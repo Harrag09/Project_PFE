@@ -14,6 +14,7 @@ public class MealDto {
     private String name;
     private double price;
     private String desc;
+    private String photo;
     private long categoryId;
 
 

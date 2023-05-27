@@ -17,7 +17,7 @@ public class Meal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(unique = true)
+    @Column(unique = true, name = "nameMeal")
     private String name;
 
     @Column(nullable = false)
@@ -26,6 +26,9 @@ public class Meal {
     @Column(nullable = false)
     private String desc;
 
+    @Lob
+    @Column(nullable = false)
+    private String photo;
 
 
 

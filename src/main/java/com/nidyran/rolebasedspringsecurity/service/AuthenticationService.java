@@ -1,18 +1,17 @@
 package com.nidyran.rolebasedspringsecurity.service;
 
-import com.nidyran.rolebasedspringsecurity.Exeption.CommandeNotFoundException;
-import com.nidyran.rolebasedspringsecurity.dao.entity.Commande;
 import com.nidyran.rolebasedspringsecurity.dao.entity.Panier;
 import com.nidyran.rolebasedspringsecurity.dao.entity.User;
 import com.nidyran.rolebasedspringsecurity.dao.repository.PanierRepository;
 import com.nidyran.rolebasedspringsecurity.dao.repository.UserRepository;
 import com.nidyran.rolebasedspringsecurity.enmus.AuthorityEnum;
-import com.nidyran.rolebasedspringsecurity.enmus.CommandeStatus;
-import com.nidyran.rolebasedspringsecurity.service.model.commande.CommandeDTO;
 import com.nidyran.rolebasedspringsecurity.service.model.panier.AddPanierDTO;
 import com.nidyran.rolebasedspringsecurity.service.model.panier.PanierDTO;
 import com.nidyran.rolebasedspringsecurity.service.model.restaurant.AddRestaurantDto;
-import com.nidyran.rolebasedspringsecurity.service.model.user.*;
+import com.nidyran.rolebasedspringsecurity.service.model.user.LoginRequestDto;
+import com.nidyran.rolebasedspringsecurity.service.model.user.LoginResponseDto;
+import com.nidyran.rolebasedspringsecurity.service.model.user.RegisterRequestDto;
+import com.nidyran.rolebasedspringsecurity.service.model.user.RegisterResponseDto;
 import com.nidyran.rolebasedspringsecurity.utils.BackendUtils;
 
 import lombok.RequiredArgsConstructor;
@@ -32,7 +31,7 @@ import java.util.concurrent.CompletableFuture;
 @RequiredArgsConstructor
 public class AuthenticationService {
     private final PanierRepository panierRepository;
-    private final ModelMapper modelMapper;
+
     private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -66,21 +65,8 @@ public class AuthenticationService {
             register(registerRequestDto.getUsername(), registerRequestDto.getPassword(), AuthorityEnum.RESTAURANT_AUTHORITY, false);
             return register(registerRequestDto.getUsername(), registerRequestDto.getPassword(), AuthorityEnum.RESTAURANT_AUTHORITY, false);
         }
-        if (AuthorityEnum.CUSTOMER_AUTHORITY.equals(registerRequestDto.getAuthority())) {
-            register(registerRequestDto.getUsername(), registerRequestDto.getPassword(), AuthorityEnum.CUSTOMER_AUTHORITY, true);
-
-             User user= userRepository.findByUsername(registerRequestDto.getUsername());
-
-            Panier panier = new Panier();
-            panier.setTotal(0);
-            panier.setUser(user);
-
-            Panier savedPanier = panierRepository.save(panier);
-            // Return the RegisterResponseDto
-            return new RegisterResponseDto();
-        }
-
-        return null; }
+        return register(registerRequestDto.getUsername(), registerRequestDto.getPassword(), AuthorityEnum.CUSTOMER_AUTHORITY, true);
+    }
 
     public RegisterResponseDto register(String username, String password, AuthorityEnum authorityEnum, boolean active) {
         User user = User.builder()
@@ -93,15 +79,5 @@ public class AuthenticationService {
         return RegisterResponseDto.builder().id(user.getId()).username(user.getUsername()).build();
 
     }
-
-    public UserDto updateAuthByUserName(long id, boolean Enable) {
-        User user = userRepository.findById(id);
-        user.setEnabled(Enable);
-        User updatedEnable = userRepository.save(user);
-        return modelMapper.map(updatedEnable, UserDto.class);
-    }
-
-
-
 
 }

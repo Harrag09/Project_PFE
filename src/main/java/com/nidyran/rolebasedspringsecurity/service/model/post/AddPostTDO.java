@@ -13,7 +13,7 @@ import javax.persistence.*;
 @RequiredArgsConstructor
 public class AddPostTDO {
 
-    private Long id ;
+
     private String image;
     private String desc;
     private long restaurantId;

@@ -1,14 +1,18 @@
 package com.nidyran.rolebasedspringsecurity.web;
 
 import com.nidyran.rolebasedspringsecurity.service.RestaurantService;
+import com.nidyran.rolebasedspringsecurity.service.model.meal.AddMealDto;
+import com.nidyran.rolebasedspringsecurity.service.model.meal.MealDto;
 import com.nidyran.rolebasedspringsecurity.service.model.restaurant.AddRestaurantDto;
 import com.nidyran.rolebasedspringsecurity.service.model.restaurant.RestaurantDto;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -19,7 +23,11 @@ import java.util.List;
 public class    RestaurantController {
 
     private final RestaurantService restaurantService;
-
+    @PostMapping("/meal/create")
+    public ResponseEntity<RestaurantDto> createRestaurant(@Valid @RequestBody AddRestaurantDto addRestaurantDto) {
+        RestaurantDto restaurantDto = restaurantService.createRestaurant(addRestaurantDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(restaurantDto);
+    }
 
 
     @PutMapping("/restaurant/update/{id}")

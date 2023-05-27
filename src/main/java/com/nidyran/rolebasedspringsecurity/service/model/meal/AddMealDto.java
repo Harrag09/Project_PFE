@@ -18,6 +18,7 @@ public class AddMealDto {
     private String name;
     private double price;
     private String desc;
+    private String photo;
     private long categoryId;
 
 

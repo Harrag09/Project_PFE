@@ -6,6 +6,7 @@ import com.nidyran.rolebasedspringsecurity.dao.entity.Category;
 import com.nidyran.rolebasedspringsecurity.dao.entity.Meal;
 import com.nidyran.rolebasedspringsecurity.dao.repository.CategoryRepository;
 import com.nidyran.rolebasedspringsecurity.dao.repository.MealRepository;
+import com.nidyran.rolebasedspringsecurity.service.model.category.CategoryDto;
 import com.nidyran.rolebasedspringsecurity.service.model.meal.AddMealDto;
 import com.nidyran.rolebasedspringsecurity.service.model.meal.MealDto;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +35,6 @@ public class MealService {
     public MealDto create(AddMealDto addMealDto) {
         log.warn("Meal added by {}", SecurityContextHolder.getContext().getAuthentication().getName());
         Meal meal = modelMapper.map(addMealDto, Meal.class);
-
         Optional<Category> optionalCategory = categoryRepository.findById(addMealDto.getCategoryId());
         if (!optionalCategory.isPresent()) {
             throw new CategoryNotFoundException(addMealDto.getCategoryId());
@@ -85,6 +85,10 @@ public class MealService {
             throw new CategoryNotFoundException(categoryId);
         }
         List<Meal> meals = mealRepository.findByCategory(optionalCategory.get());
+        return meals.stream().map(meal -> modelMapper.map(meal, MealDto.class)).collect(Collectors.toList());
+    }
+    public List<MealDto> getAllMeal() {
+        List<Meal> meals = mealRepository.findAll();
         return meals.stream().map(meal -> modelMapper.map(meal, MealDto.class)).collect(Collectors.toList());
     }
 
