@@ -8,10 +8,7 @@ import com.nidyran.rolebasedspringsecurity.enmus.AuthorityEnum;
 import com.nidyran.rolebasedspringsecurity.service.model.panier.AddPanierDTO;
 import com.nidyran.rolebasedspringsecurity.service.model.panier.PanierDTO;
 import com.nidyran.rolebasedspringsecurity.service.model.restaurant.AddRestaurantDto;
-import com.nidyran.rolebasedspringsecurity.service.model.user.LoginRequestDto;
-import com.nidyran.rolebasedspringsecurity.service.model.user.LoginResponseDto;
-import com.nidyran.rolebasedspringsecurity.service.model.user.RegisterRequestDto;
-import com.nidyran.rolebasedspringsecurity.service.model.user.RegisterResponseDto;
+import com.nidyran.rolebasedspringsecurity.service.model.user.*;
 import com.nidyran.rolebasedspringsecurity.utils.BackendUtils;
 
 import lombok.RequiredArgsConstructor;
@@ -80,4 +77,18 @@ public class AuthenticationService {
 
     }
 
+    public UserDto updateAuthByUserName(long id, boolean auth) {
+        User user = userRepository.findById(id);
+        if (user == null) {
+
+            return null;
+        }
+        user.setEnabled(auth);
+        User updatedUser = userRepository.save(user);
+
+        ModelMapper modelMapper = new ModelMapper();
+        UserDto userDto = modelMapper.map(updatedUser, UserDto.class);
+
+        return userDto;
+    }
 }
