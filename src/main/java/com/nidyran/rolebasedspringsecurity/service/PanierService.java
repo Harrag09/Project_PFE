@@ -6,15 +6,20 @@ import com.nidyran.rolebasedspringsecurity.Exeption.PanierNotFoundException;
 import com.nidyran.rolebasedspringsecurity.dao.entity.*;
 
 import com.nidyran.rolebasedspringsecurity.dao.repository.MealRepository;
+import com.nidyran.rolebasedspringsecurity.dao.repository.PanierItemRepository;
 import com.nidyran.rolebasedspringsecurity.dao.repository.PanierRepository;
 
+import com.nidyran.rolebasedspringsecurity.dao.repository.UserRepository;
+import com.nidyran.rolebasedspringsecurity.service.model.meal.MealDto;
 import com.nidyran.rolebasedspringsecurity.service.model.panier.AddPanierDTO;
 import com.nidyran.rolebasedspringsecurity.service.model.panier.PanierDTO;
 import com.nidyran.rolebasedspringsecurity.service.model.panier.PanierItemDTO;
+import com.nidyran.rolebasedspringsecurity.service.model.user.UserDto;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 import java.util.Optional;
@@ -28,6 +33,8 @@ public class PanierService {
     private final MealRepository mealRepository;
     private final PanierRepository panierRepository;
     private final ModelMapper modelMapper;
+    private final PanierItemRepository panierItemRepository;
+    private final UserRepository userRepository;
 
     public PanierDTO createPanier(AddPanierDTO addPanierDTO) {
         Panier panier = modelMapper.map(addPanierDTO, Panier.class);
@@ -67,17 +74,35 @@ public class PanierService {
 
 
 
-    public void removeItemFromPanier(Long panierId, Long panierItemId) {
+    public void deleteItemFromPanier(Long panierId, Long mealId, int quantity) {
         Panier panier = panierRepository.findById(panierId).orElseThrow(() -> new PanierNotFoundException());
-        PanierItem panierItem = panier.getPanierItems().stream()
-                .filter(item -> item.getId().equals(panierItemId))
-                .findFirst()
-                .orElseThrow(() -> new PanierNotFoundException());
+        Meal meal = mealRepository.findById(mealId).orElseThrow(() -> new MealNotFoundException(mealId));
 
-        panier.getPanierItems().remove(panierItem);
+        // Check if the meal is in the panier
+        Optional<PanierItem> existingItem = panier.getPanierItems().stream()
+                .filter(item -> item.getMeal().getId()==(mealId))
+                .findFirst();
+
+        if (existingItem.isPresent()) {
+            // Update the quantity of the existing item or remove it if the quantity reaches zero
+            PanierItem panierItem = existingItem.get();
+            int newQuantity = panierItem.getQty() - quantity;
+            if (newQuantity > 0) {
+                panierItem.setQty(newQuantity);
+            } else {
+                panier.getPanierItems().remove(panierItem);
+            }
+        } 
+
+        // Recalculate the total of the panier
+        double panierTotal = panier.getPanierItems().stream()
+                .mapToDouble(item -> item.getMeal().getPrice() * item.getQty())
+                .sum();
+        panier.setTotal(panierTotal);
 
         panierRepository.save(panier);
     }
+
 
     public void clearPanier(Long panierId) {
         Panier panier = panierRepository.findById(panierId).orElseThrow(() -> new PanierNotFoundException());
@@ -102,6 +127,23 @@ public class PanierService {
                 .map(item -> modelMapper.map(item, PanierItemDTO.class))
                 .collect(Collectors.toList());
     }
+    public Long getIdPanierByIdUser(Long userId) {
+        Panier panier = panierRepository.findByUserId(userId);
+        if (panier == null) {
+            throw new PanierNotFoundException();
+        }
+        return panier.getId();
+    }
+    public int getQtyByIdPanierFromPanierItem(Long panierId, Long mealId) {
+        // Assuming you have a panier item repository or service to interact with the data
+        PanierItem panierItem = panierItemRepository.findByPanierIdAndMealId(panierId, mealId);
+        if (panierItem != null) {
+            return panierItem.getQty();
+        } else {
+            return 0;
+        }
+    }
+
 
 }
 

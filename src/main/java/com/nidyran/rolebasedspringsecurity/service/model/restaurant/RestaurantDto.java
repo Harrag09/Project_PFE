@@ -18,6 +18,8 @@ public class RestaurantDto {
          private String address;
          private String log;
          private long userId;
+         private String latitude;
+         private String longitude;
 
 }
     

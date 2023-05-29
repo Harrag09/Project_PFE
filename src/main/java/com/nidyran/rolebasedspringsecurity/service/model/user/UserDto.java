@@ -21,6 +21,13 @@ public class UserDto {
 
     @Enumerated(EnumType.STRING)
     private AuthorityEnum authority;
+    private String firstName;
+    private String lastName;
+    private String phone;
+    private String image;
+    private String email;
+
+
 
 
 }

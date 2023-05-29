@@ -22,6 +22,8 @@ public class AddRestaurantDto {
     private String address;
     private String log;
     private long userId;
+    private String latitude;
+    private String longitude;
 
 
 }

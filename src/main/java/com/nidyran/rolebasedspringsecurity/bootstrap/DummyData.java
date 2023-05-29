@@ -57,7 +57,7 @@ public class DummyData implements CommandLineRunner {
 
 
     private void addUser(String username, String password, AuthorityEnum authorityEnum, boolean active) {
-        authenticationService.register(username, password, authorityEnum, active);
+        authenticationService.register(username, password, authorityEnum, active,null,null,null,null);
         log.warn("{} token {}", username, BackendUtils.generateToken(username, secret, validity));
 
     }

@@ -29,6 +29,14 @@ public class User {
     @Enumerated(EnumType.STRING)
     private AuthorityEnum authority;
 
+    private String firstName;
+    private String lastName;
+    private String phone;
+    private String email;
+
+    @Lob
+    private String image;
+
 
 
 

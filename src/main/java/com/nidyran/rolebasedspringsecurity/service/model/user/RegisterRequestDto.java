@@ -23,5 +23,11 @@ public class RegisterRequestDto {
     private String username;
     private String password;
     private AuthorityEnum authority;
+    private String firstName;
+    private String lastName;
+    private String phone;
+    private String image;
+    private String email;
+
 
 }

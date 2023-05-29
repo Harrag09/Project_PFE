@@ -1,5 +1,7 @@
 package com.nidyran.rolebasedspringsecurity.web;
 
+import com.nidyran.rolebasedspringsecurity.Exeption.MealNotFoundException;
+import com.nidyran.rolebasedspringsecurity.Exeption.PanierNotFoundException;
 import com.nidyran.rolebasedspringsecurity.service.PanierService;
 import com.nidyran.rolebasedspringsecurity.service.model.panier.AddPanierDTO;
 import com.nidyran.rolebasedspringsecurity.service.model.panier.PanierDTO;
@@ -34,11 +36,15 @@ public class PanierController {
         return ResponseEntity.ok(panierDTO);
     }
 
-    @DeleteMapping("RemoveItem/{panierId}/items/{panierItemId}")
-    public ResponseEntity<?> removeItemFromPanier(@PathVariable Long panierId,
-                                                  @PathVariable Long panierItemId) {
-        panierService.removeItemFromPanier(panierId, panierItemId);
-        return ResponseEntity.ok().build();
+    @DeleteMapping("/RemoveItem/{panierId}/items/{mealId}/{quantity}")
+    public ResponseEntity<?> removeItemFromPanier(@PathVariable Long panierId, @PathVariable Long mealId, @PathVariable int quantity) {
+        try {
+            panierService.deleteItemFromPanier(panierId, mealId, quantity);
+            return ResponseEntity.ok().build();
+        } catch (PanierNotFoundException | MealNotFoundException e) {
+            // Handle PanierNotFoundException, MealNotFoundException, or ItemNotFoundException and return an appropriate response
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @DeleteMapping("Clear/{panierId}")
@@ -57,6 +63,16 @@ public class PanierController {
     public ResponseEntity<List<PanierItemDTO>> getPanierItems(@PathVariable Long panierId) {
         List<PanierItemDTO> panierItems = panierService.getPanierItems(panierId);
         return ResponseEntity.ok(panierItems);
+    }
+    @GetMapping("/panierByIdUser/{userId}")
+    public ResponseEntity<Long> getIdPanierByUserId(@PathVariable Long userId) {
+        Long panierId = panierService.getIdPanierByIdUser(userId);
+        return ResponseEntity.ok(panierId);
+    }
+
+    @GetMapping("/{panierId}/meal/{mealId}/quantity")
+    public int getQtyByIdPanierFromPanierItem(@PathVariable Long panierId, @PathVariable Long mealId) {
+        return panierService.getQtyByIdPanierFromPanierItem(panierId, mealId);
     }
 
 }

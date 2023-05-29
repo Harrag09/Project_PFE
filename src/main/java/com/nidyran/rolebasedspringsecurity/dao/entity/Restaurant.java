@@ -19,6 +19,7 @@ public class Restaurant {
     @Column(nullable = false)
     private String name;
 
+
     @Column(nullable = false)
     private String address;
 
@@ -29,4 +30,11 @@ public class Restaurant {
     @OneToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="UserId")
     private User user;
+
+    private String latitude;
+    private String longitude;
+
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
+    private List<Category> categories;
+
 }
