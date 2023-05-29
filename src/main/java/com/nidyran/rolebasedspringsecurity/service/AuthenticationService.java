@@ -1,5 +1,8 @@
 package com.nidyran.rolebasedspringsecurity.service;
 
+import com.nidyran.rolebasedspringsecurity.Exeption.CategoryNotFoundException;
+import com.nidyran.rolebasedspringsecurity.Exeption.UserNotFoundException;
+import com.nidyran.rolebasedspringsecurity.dao.entity.Category;
 import com.nidyran.rolebasedspringsecurity.dao.entity.Panier;
 import com.nidyran.rolebasedspringsecurity.dao.entity.Restaurant;
 import com.nidyran.rolebasedspringsecurity.dao.entity.User;
@@ -7,6 +10,7 @@ import com.nidyran.rolebasedspringsecurity.dao.repository.PanierRepository;
 import com.nidyran.rolebasedspringsecurity.dao.repository.RestaurantRepository;
 import com.nidyran.rolebasedspringsecurity.dao.repository.UserRepository;
 import com.nidyran.rolebasedspringsecurity.enmus.AuthorityEnum;
+import com.nidyran.rolebasedspringsecurity.service.model.category.CategoryDto;
 import com.nidyran.rolebasedspringsecurity.service.model.panier.AddPanierDTO;
 import com.nidyran.rolebasedspringsecurity.service.model.panier.PanierDTO;
 import com.nidyran.rolebasedspringsecurity.service.model.restaurant.AddRestaurantDto;
@@ -23,6 +27,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 
@@ -129,6 +134,18 @@ public class AuthenticationService {
         UserDto userDto = modelMapper.map(updatedUser, UserDto.class);
 
         return userDto;
+    }
+
+    public UserDto updateUserInfo(long userId, UserDto updateUserDto) {
+        User user = userRepository.findById(userId);
+        if (user != null) {
+            modelMapper.map(updateUserDto, user);
+            userRepository.save(user);
+            log.warn("User {} updated by {}", user.getFirstName(), BackendUtils.getCurrentUsername());
+            return modelMapper.map(user, UserDto.class);
+        } else {
+            throw new UserNotFoundException(userId);
+        }
     }
 
 }

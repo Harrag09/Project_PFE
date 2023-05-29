@@ -31,6 +31,11 @@
         public ResponseEntity<UserDto> updateAuthority(@PathVariable("id") long id, @RequestBody boolean auth) {
             return ResponseEntity.ok(authenticationService.updateAuthByUserName(id,auth));
         }
+        @PutMapping("/updateUser/{userId}")
+        public ResponseEntity<UserDto> updateUser(@PathVariable long userId, @RequestBody UserDto updateUserDto) {
+            UserDto updatedUser = authenticationService.updateUserInfo(userId, updateUserDto);
+            return ResponseEntity.ok(updatedUser);
+        }
 
 
     }
