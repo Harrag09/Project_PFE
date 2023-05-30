@@ -27,6 +27,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Field;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
@@ -136,26 +137,42 @@ public class AuthenticationService {
         return userDto;
     }
 
+
+
     public boolean updateUserInfo(long userId, String password, UserDto updateUserDto) {
         User user = userRepository.findById(userId);
         if (user != null) {
             if (passwordEncoder.matches(password, user.getPassword())) {
-                // The provided password matches the user's current password
-                modelMapper.map(updateUserDto, user);
-                if (updateUserDto.getPassword() != null) {
-                    user.setPassword(passwordEncoder.encode(updateUserDto.getPassword())); // Encrypt the new password
+                Field[] fields = updateUserDto.getClass().getDeclaredFields();
+                for (Field field : fields) {
+                    field.setAccessible(true);
+                    try {
+                        Object value = field.get(updateUserDto);
+                        if (value != null) {
+                            Field userField = user.getClass().getDeclaredField(field.getName());
+                            userField.setAccessible(true);
+                            userField.set(user, value);
+                        }
+                    } catch (Exception e) {
+                    }
                 }
+
+                if (updateUserDto.getPassword() != null) {
+                    user.setPassword(passwordEncoder.encode(updateUserDto.getPassword()));
+                }
+
                 userRepository.save(user);
                 log.warn("User {} updated by {}", user.getFirstName(), BackendUtils.getCurrentUsername());
                 return true;
             } else {
-                // The provided password does not match the user's current password
                 return false;
             }
         } else {
             throw new UserNotFoundException(userId);
         }
     }
+
+
 
 
     public UserDto getUserInfo(long userId) {
