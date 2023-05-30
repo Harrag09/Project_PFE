@@ -19,7 +19,8 @@ public class AddPanierItemDTO {
     private Long id;
     private long panierId;
     private long mealId;
-    private int  qte;
+    private int  qty;
+
 
 
 

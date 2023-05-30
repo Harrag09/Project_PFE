@@ -22,6 +22,7 @@ public class PanierItem {
     private String NameMeal;
 
     private int qty;
+    private double price;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "panierId", nullable = false)

@@ -31,11 +31,24 @@
         public ResponseEntity<UserDto> updateAuthority(@PathVariable("id") long id, @RequestBody boolean auth) {
             return ResponseEntity.ok(authenticationService.updateAuthByUserName(id,auth));
         }
+
         @PutMapping("/updateUser/{userId}")
-        public ResponseEntity<UserDto> updateUser(@PathVariable long userId, @RequestBody UserDto updateUserDto) {
-            UserDto updatedUser = authenticationService.updateUserInfo(userId, updateUserDto);
-            return ResponseEntity.ok(updatedUser);
+        public ResponseEntity<Boolean> updateUserInfo(
+                @PathVariable("userId") long userId,
+                @RequestParam("password") String password,
+                @RequestBody UserDto updateUserDto) {
+
+            boolean isUpdated = authenticationService.updateUserInfo(userId, password, updateUserDto);
+            if (isUpdated) {
+                return ResponseEntity.ok(true);
+            } else {
+                return ResponseEntity.ok(false);
+            }
         }
 
+        @GetMapping("/userInfo/{userId}")
+        public UserDto getUserInfo(@PathVariable long userId) {
+            return authenticationService.getUserInfo(userId);
+        }
 
     }

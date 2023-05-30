@@ -12,8 +12,9 @@ public class PanierItemDTO {
     private Long id;
     private long idPanier;
     private long mealId;
-    private int  qte;
+    private int  qty;
     private String NameMeal;
+    private double price;
 
 
 

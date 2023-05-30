@@ -61,6 +61,7 @@ public class PanierService {
             panierItem.setQty(quantity);
             panierItem.setPanier(panier);
             panierItem.setNameMeal(meal.getName());
+            panierItem.setPrice(meal.getPrice());
             panier.getPanierItems().add(panierItem);
         }
 

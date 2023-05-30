@@ -25,6 +25,6 @@ public class CommandeItem {
     private Meal meal;
 
     @Column(name = "qty")
-    private int quantity;
+    private int qty;
 
 }

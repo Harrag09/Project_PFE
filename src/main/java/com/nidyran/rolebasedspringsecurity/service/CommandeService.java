@@ -74,7 +74,7 @@ public class CommandeService {
 //aa
     private CommandeItem convert (PanierItem panierItem)
     {  CommandeItem commandeItem = new CommandeItem();
-        commandeItem.setQuantity(panierItem.getQty());
+        commandeItem.setQty(panierItem.getQty());
         commandeItem.setMeal(panierItem.getMeal());
         return commandeItem;
     }
