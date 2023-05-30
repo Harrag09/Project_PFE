@@ -60,6 +60,7 @@ public class PanierService {
             panierItem.setMeal(meal);
             panierItem.setQty(quantity);
             panierItem.setPanier(panier);
+            panierItem.setNameMeal(meal.getName());
             panier.getPanierItems().add(panierItem);
         }
 
@@ -135,7 +136,6 @@ public class PanierService {
         return panier.getId();
     }
     public int getQtyByIdPanierFromPanierItem(Long panierId, Long mealId) {
-        // Assuming you have a panier item repository or service to interact with the data
         PanierItem panierItem = panierItemRepository.findByPanierIdAndMealId(panierId, mealId);
         if (panierItem != null) {
             return panierItem.getQty();
@@ -143,6 +143,8 @@ public class PanierService {
             return 0;
         }
     }
+
+
 
 
 }
