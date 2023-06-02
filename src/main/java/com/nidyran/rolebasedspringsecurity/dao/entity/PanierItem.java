@@ -21,6 +21,10 @@ public class PanierItem {
 
     private String NameMeal;
 
+
+
+    @Lob
+    private String image;
     private int qty;
     private double price;
 

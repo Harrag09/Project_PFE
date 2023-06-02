@@ -11,5 +11,5 @@ public class PanierDTO {
     private long id;
     private long userId;
     private double total;
-
+    private int totalItem;
 }

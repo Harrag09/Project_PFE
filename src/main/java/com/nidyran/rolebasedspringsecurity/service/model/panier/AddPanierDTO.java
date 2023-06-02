@@ -12,4 +12,5 @@ public class AddPanierDTO {
     private Long id ;
     private long userId;
     private double total;
+    private int totalItem;
 }

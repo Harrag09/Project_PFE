@@ -49,7 +49,7 @@ public class AuthenticationService {
     private Long validity;
 
     @Value("${jwt.secret}")
-    private String secret;
+    private String secret;  
 
     public LoginResponseDto login(LoginRequestDto loginRequestDto) {
         User user1=userRepository.findByUsername(loginRequestDto.getUsername());
@@ -90,11 +90,13 @@ public class AuthenticationService {
 
         AddPanierDTO addPanierDTO = new AddPanierDTO();
         addPanierDTO.setTotal(0);
+        addPanierDTO.setTotalItem(0);
         addPanierDTO.setUserId(registerRequestDto.getId());
 
             User user = userRepository.findByUsername(registerRequestDto.getUsername());
             Panier panier = modelMapper.map(addPanierDTO, Panier.class);
             panier.setUser(user);
+
             Panier savedPanier = panierRepository.save(panier);
             PanierDTO panierDTO = modelMapper.map(savedPanier, PanierDTO.class);
 
@@ -184,6 +186,12 @@ public class AuthenticationService {
         } else {
             throw new UserNotFoundException(userId);
         }
+    }
+    public Boolean UserExitOrNo(long userId) {
+        User user = userRepository.findById(userId);
+        if (user == null) {
+            return false;
+        } return true;
     }
 
 }

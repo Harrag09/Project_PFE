@@ -16,7 +16,7 @@ public class MealDto {
     private String desc;
     private String photo;
     private long categoryId;
-
+    private boolean available;
 
 
 }

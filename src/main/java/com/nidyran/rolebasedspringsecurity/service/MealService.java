@@ -39,7 +39,7 @@ public class MealService {
         if (!optionalCategory.isPresent()) {
             throw new CategoryNotFoundException(addMealDto.getCategoryId());
         }
-
+        meal.setAvailable(true);
         meal.setCategory(optionalCategory.get());
         return modelMapper.map(mealRepository.save(meal), MealDto.class);
     }

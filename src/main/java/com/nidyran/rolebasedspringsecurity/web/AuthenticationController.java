@@ -51,4 +51,10 @@
             return authenticationService.getUserInfo(userId);
         }
 
+
+        @GetMapping("/users/{userId}/exitOrNo")
+        public boolean checkUserExitOrNo(@PathVariable long userId) {
+            boolean userExists = authenticationService.UserExitOrNo(userId);
+            return userExists;
+        }
     }

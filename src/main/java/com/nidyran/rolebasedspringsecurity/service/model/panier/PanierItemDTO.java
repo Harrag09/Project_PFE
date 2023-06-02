@@ -15,7 +15,7 @@ public class PanierItemDTO {
     private int  qty;
     private String NameMeal;
     private double price;
-
+    private String image;
 
 
 }

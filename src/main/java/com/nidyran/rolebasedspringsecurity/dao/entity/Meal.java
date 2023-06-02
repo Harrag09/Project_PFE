@@ -35,7 +35,7 @@ public class Meal {
     @ManyToOne(fetch=FetchType.EAGER, optional=false)
     @JoinColumn(name="CATEGORY_ID")
     private Category category;
-
+    private boolean available;
 
 
 

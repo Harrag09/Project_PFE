@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 @Component
 @Service
 @RequiredArgsConstructor
-public class RestaurantService {
+public class    RestaurantService {
     private final RestaurantRepository restaurantRepository;
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;

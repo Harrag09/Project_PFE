@@ -27,6 +27,10 @@ public class Restaurant {
     @Column(nullable = false)
     private String log;
 
+    @Lob
+    @Column(nullable = false)
+    private String log2;
+
     @OneToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="UserId")
     private User user;

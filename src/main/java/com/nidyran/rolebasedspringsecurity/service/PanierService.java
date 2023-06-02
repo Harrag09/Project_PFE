@@ -61,6 +61,7 @@ public class PanierService {
             panierItem.setQty(quantity);
             panierItem.setPanier(panier);
             panierItem.setNameMeal(meal.getName());
+            panierItem.setImage(meal.getPhoto());
             panierItem.setPrice(meal.getPrice());
             panier.getPanierItems().add(panierItem);
         }
@@ -70,6 +71,7 @@ public class PanierService {
                 .mapToDouble(item -> item.getMeal().getPrice() * item.getQty())
                 .sum();
         panier.setTotal(panierTotal);
+        panier.setTotalItem(panier.getTotalItem()+quantity);
 
         panierRepository.save(panier);
     }
@@ -101,6 +103,7 @@ public class PanierService {
                 .mapToDouble(item -> item.getMeal().getPrice() * item.getQty())
                 .sum();
         panier.setTotal(panierTotal);
+        panier.setTotalItem(panier.getTotalItem()-quantity);
 
         panierRepository.save(panier);
     }

@@ -22,4 +22,6 @@ public class Panier {
     private User user;
     @OneToMany(mappedBy = "panier", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PanierItem> panierItems;
+
+    private int totalItem;
 }
