@@ -25,9 +25,11 @@ import java.util.stream.Collectors;
 public class CommandeController {
     private final CommandeService commandeService;
 
-    @PostMapping("/commandes/create/{panierId}")
-    public AddCommandeDTO createCommande(@PathVariable Long panierId, @RequestBody AddCommandeDTO addCommandeDTO) {
-        return commandeService.createCommande(panierId, addCommandeDTO);
+    @PostMapping("/create")
+    public ResponseEntity<List<AddCommandeDTO>> createCommandes(@RequestBody AddCommandeDTO addCommandeDTO) {
+        Long panierId = addCommandeDTO.getPanierId();
+        List<AddCommandeDTO> commandes = commandeService.createCommandes(panierId, addCommandeDTO);
+        return ResponseEntity.ok(commandes);
     }
 
     @GetMapping("/getAllCommandByRestaurantId")

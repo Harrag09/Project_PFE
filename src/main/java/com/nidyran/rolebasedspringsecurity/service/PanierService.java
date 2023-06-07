@@ -113,7 +113,7 @@ public class PanierService {
         Panier panier = panierRepository.findById(panierId).orElseThrow(() -> new PanierNotFoundException());
         panier.setTotal(0);
         panier.getPanierItems().clear();
-
+        panier.setTotalItem(0);
         panierRepository.save(panier);
     }
 

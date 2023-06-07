@@ -31,7 +31,8 @@ public class AddCommandeDTO {
 
     private String paymentMethod;
 
-    private long restaurantId;
+    private String latitude;
+    private String longitude;
 
     private LocalDateTime createdAt;
 

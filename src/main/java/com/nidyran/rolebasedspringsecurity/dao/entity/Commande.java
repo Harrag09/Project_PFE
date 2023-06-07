@@ -50,7 +50,8 @@ public class Commande {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurantId")
     private Restaurant restaurant;
-
+    private String latitude;
+    private String longitude;
     private LocalDateTime createdAt;
 
 

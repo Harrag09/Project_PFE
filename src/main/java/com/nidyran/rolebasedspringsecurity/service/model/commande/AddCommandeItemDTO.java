@@ -9,7 +9,6 @@ import lombok.Setter;
 @RequiredArgsConstructor
 public class AddCommandeItemDTO {
     private Long mealId;
-
     private int quantity;
 
 }
