@@ -12,8 +12,10 @@ public class ContactDto {
 
 
     private Long id;
-    private String name;
+    private String firstName;
+    private String lastName;
     private String email;
+    private String num;
     private String  message;
     private long userId;
     private long restaurantId;

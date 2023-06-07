@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -17,6 +18,7 @@ public class AddPostTDO {
     private String image;
     private String desc;
     private long restaurantId;
+    private LocalDateTime createdAt;
 
 
 }

@@ -25,6 +25,8 @@ public class ContactService {
         Contact saveContact = contactRepository.save(contact);
         return modelMapper.map(saveContact,AddContactDto.class);
     }
+
+
     public ContactDto getContactByRestaurantId(long restaurantId) {
         Contact contact = contactRepository.findByRestaurantId(restaurantId);
         if (contact == null) {

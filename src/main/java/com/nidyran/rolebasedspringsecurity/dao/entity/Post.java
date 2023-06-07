@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -32,5 +34,13 @@ public class Post {
     @JoinColumn(name="Restaurant_ID")
     private Restaurant restaurant;
 
+    @OneToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="UserId")
+    private User user;
+
+    @ElementCollection
+    private Set<Long> likedBy;
+
+    private LocalDateTime createdAt;
 
 }

@@ -12,9 +12,13 @@ import javax.persistence.*;
 @Setter
 @RequiredArgsConstructor
 public class AddContactDto {
-
-    private String name;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String firstName;
+    private String lastName;
     private String email;
+    private String num;
     private String  message;
     private long userId;
     private long restaurantId;

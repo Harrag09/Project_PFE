@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @RequiredArgsConstructor
@@ -15,6 +17,7 @@ public class PostTDO {
     private String image;
     private String desc;
     private int nbLike;
-
-
+    private LocalDateTime createdAt;
+    private long userId;
+    private boolean likedByUser;
 }

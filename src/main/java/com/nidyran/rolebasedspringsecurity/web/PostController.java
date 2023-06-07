@@ -23,39 +23,42 @@ public class PostController {
         return ResponseEntity.ok(createdPost);
     }
 
-    @PutMapping("post/LikePost/{id}/like")
-    public ResponseEntity<PostTDO> likePost(@PathVariable("id") long id) {
-        PostTDO postTDO = postService.likePost(id);
-        if (postTDO != null) {
-            return ResponseEntity.ok(postTDO);
-        }
-        return ResponseEntity.notFound().build();
+    @PostMapping("/{id}/like")
+    public PostTDO likePost(@PathVariable("id") long id, @RequestParam("userId") long userId) {
+        return postService.likePost(id, userId);
     }
 
-    @PutMapping("post/DislikePost/{id}/dislike")
-    public ResponseEntity<PostTDO> dislikePost(@PathVariable("id") long id) {
-        PostTDO postTDO = postService.dislikePost(id);
-        if (postTDO != null) {
-            return ResponseEntity.ok(postTDO);
+    @PostMapping("/posts/{id}/dislike")
+    public ResponseEntity<PostTDO> dislikePost(@PathVariable long id, @RequestParam long userId) {
+        PostTDO dislikedPost = postService.dislikePost(id, userId);
+        if (dislikedPost != null) {
+            return ResponseEntity.ok(dislikedPost);
+        } else {
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("post/removePost/{id}")
+    @DeleteMapping("/post/removePost/{id}")
     public ResponseEntity<Void> removePost(@PathVariable("id") long id) {
         postService.removePost(id);
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("post/GetPostByRestaurantId/{restaurantId}")
+    @GetMapping("/post/GetPostByRestaurantId/{restaurantId}")
     public ResponseEntity<List<PostTDO>> getPostsByRestaurantId(@PathVariable("restaurantId") long restaurantId) {
         List<PostTDO> posts = postService.getPostsByRestaurantId(restaurantId);
         return ResponseEntity.ok(posts);
     }
 
-    @GetMapping("post/GetAllPost")
+    @GetMapping("/post/GetAllPost")
     public ResponseEntity<List<PostTDO>> getAllPosts() {
         List<PostTDO> posts = postService.getAllPosts();
         return ResponseEntity.ok(posts);
     }
+    @GetMapping("/posts/{id}/likedBy/{userId}")
+    public ResponseEntity<Boolean> hasLikedPost(@PathVariable long id, @PathVariable long userId) {
+        boolean hasLiked = postService.hasLikedPost(id, userId);
+        return ResponseEntity.ok(hasLiked);
+    }
+
 }

@@ -16,8 +16,10 @@ public class Contact {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String firstName;
+    private String lastName;
     private String email;
+    private String num;
     private String  message;
 
     @ManyToOne(fetch = FetchType.LAZY)

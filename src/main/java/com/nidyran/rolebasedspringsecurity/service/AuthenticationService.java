@@ -144,7 +144,7 @@ public class AuthenticationService {
     public boolean updateUserInfo(long userId, String password, UserDto updateUserDto) {
         User user = userRepository.findById(userId);
         if (user != null) {
-            if (passwordEncoder.matches(password, user.getPassword())) {
+            if (password.equals(user.getPassword())){
                 Field[] fields = updateUserDto.getClass().getDeclaredFields();
                 for (Field field : fields) {
                     field.setAccessible(true);
